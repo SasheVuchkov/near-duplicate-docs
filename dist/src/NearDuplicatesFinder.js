@@ -69,12 +69,8 @@ class NearDuplicatesFinder extends events_1.EventEmitter {
                 if (counter < this.signatureMatrix.getSignatureLength() && counter % rowsPerBand != 0) {
                     continue;
                 }
-                yield this.findCandidates([...docIds], currentVectors[bandKey])
-                    .then(bucket => this.compress(bucket))
-                    .catch(err => {
-                    this.emit('error', err);
-                    this.errors.push(err);
-                });
+                const bucket = yield this.findCandidates([...docIds], currentVectors[bandKey]);
+                yield this.compress(bucket);
                 bandKey += 1;
             }
             yield this.findDuplicates(this.candidates);
@@ -87,7 +83,6 @@ class NearDuplicatesFinder extends events_1.EventEmitter {
             let bucket = {};
             for (const doc of docIds) {
                 const hash = vectors[doc].reduce((a, b) => a + b);
-                console.log(hash);
                 if (!bucket[hash]) {
                     bucket[hash] = [];
                 }
@@ -112,6 +107,7 @@ class NearDuplicatesFinder extends events_1.EventEmitter {
         for (const hash in bucket) {
             if (bucket[hash].length > 1 && !this.hashRegister.check(bucket[hash].join(''))) {
                 this.candidates.push(bucket[hash]);
+                this.emit('found_candidates', bucket[hash]);
             }
         }
     }
@@ -135,9 +131,6 @@ class NearDuplicatesFinder extends events_1.EventEmitter {
                 }
             }
         });
-    }
-    compareVectors(a, b) {
-        return a.join('') === b.join('');
     }
     compareShingles(s1, s2) {
         let similar = [];

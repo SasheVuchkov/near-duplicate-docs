@@ -93,15 +93,13 @@ export default class NearDuplicatesFinder extends EventEmitter{
             }
 
 
-          await this.findCandidates([...docIds], currentVectors[bandKey])
-                .then(bucket => this.compress(bucket))
-                .catch(err => {
-                this.emit('error', err);
-                this.errors.push(err)
-            });
+            const bucket = await this.findCandidates([...docIds], currentVectors[bandKey]);
+            await this.compress(bucket)
 
             bandKey += 1;
         }
+
+
 
 
         await this.findDuplicates(this.candidates);
@@ -115,10 +113,10 @@ export default class NearDuplicatesFinder extends EventEmitter{
         let bucket: Bucket = {}
         for (const doc of docIds) {
             const hash = vectors[doc].reduce((a, b) => a + b);
-            console.log(hash);
             if (!bucket[hash]) {
                 bucket[hash] = [];
             }
+
             bucket[hash].push(doc);
         }
 
@@ -143,6 +141,7 @@ export default class NearDuplicatesFinder extends EventEmitter{
         for (const hash in bucket) {
             if (bucket[hash].length > 1 && !this.hashRegister.check(bucket[hash].join(''))) {
                 this.candidates.push(bucket[hash]);
+                this.emit('found_candidates', bucket[hash]);
             }
         }
     }
@@ -173,9 +172,6 @@ export default class NearDuplicatesFinder extends EventEmitter{
            }
        }
 
-    protected compareVectors(a: number[], b: number[]): boolean {
-        return a.join('') === b.join('');
-    }
 
     protected compareShingles(s1: (string|number)[], s2: (string|number)[]): number {
 

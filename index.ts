@@ -44,7 +44,8 @@ import {makeFinder} from "./src/NearDuplicatesFinder";
 
     await auditor.start();
 
-    auditor.on('found_candidates', (candidate) => console.log(candidate));
+    auditor.on('found_candidates', candidates => console.log(candidates));
+    auditor.on('found_duplicates', duplicates => console.log(duplicates))
 
     if (auditor.hasErrors()) {
         console.log(auditor.getErrors());

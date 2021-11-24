@@ -35,7 +35,6 @@ export default class NearDuplicatesFinder extends EventEmitter {
     compare(docIds: string[], shingles: {
         [docId: string]: (string | number)[];
     }): Promise<void>;
-    protected compareVectors(a: number[], b: number[]): boolean;
     protected compareShingles(s1: (string | number)[], s2: (string | number)[]): number;
     hasErrors(): boolean;
     getErrors(): any[];

@@ -26,28 +26,6 @@ const NearDuplicatesFinder_1 = require("./src/NearDuplicatesFinder");
 const auditor = (0, NearDuplicatesFinder_1.makeFinder)({ minSimilarity: 0.01, shinglesSize: 5, shinglesType: 'word', signatureLength: 100, rowsPerBand: 5 });
 const process = () => __awaiter(void 0, void 0, void 0, function* () {
     var e_1, _a;
-    /*
-        await tool.process('tt', tt, (doc:string, shingle) => {
-            shinglesMatrix.addItem(doc, shingle);
-        }, true)
-    
-        await tool.process('tt2', tt2, (doc:string, shingle) => {
-            shinglesMatrix.addItem(doc, shingle);
-        }, true)
-    
-    
-        const tol = shinglesMatrix.getRows();
-    
-        const words = tol['tt2'].map(item => item[1]);
-    
-        for (const t of tol['tt']) {
-            if (words.indexOf(t[1]) > -1) {
-                console.log(t);
-            }
-        }
-        return;
-    
-     */
     let count = 0;
     try {
         const fileStream = fs_1.default.createReadStream(path_1.default.join(__dirname, '..', 'datasets', 'test.ft.txt'));
@@ -85,7 +63,8 @@ const process = () => __awaiter(void 0, void 0, void 0, function* () {
         console.error(err);
     }
     yield auditor.start();
-    auditor.on('found_candidates', (candidate) => console.log(candidate));
+    auditor.on('found_candidates', candidates => console.log(candidates));
+    auditor.on('found_duplicates', duplicates => console.log(duplicates));
     if (auditor.hasErrors()) {
         console.log(auditor.getErrors());
     }
