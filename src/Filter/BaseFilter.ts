@@ -1,23 +1,31 @@
 import FilterInterface from "./FilterInterface";
 
 export default class BaseFilter implements FilterInterface {
-    protected filters: FilterInterface[] = [];
+    protected children: FilterInterface[] = [];
 
-    public addFilter = (filter: FilterInterface): FilterInterface => {
-        this.filters.push(filter);
+    public addChild = (filter: FilterInterface): FilterInterface => {
+        this.children.push(filter);
         return this;
     }
 
-    public removeFilter = (filter: FilterInterface): FilterInterface => {
-        this.filters = this.filters.filter(flt => flt != filter);
+    public removeChild = (filter: FilterInterface): FilterInterface => {
+        this.children = this.children.filter(flt => flt != filter);
         return this;
     }
 
     public filter = (text: string): string => {
-        this.filters.forEach(flt => {
+        this.children.forEach(flt => {
             text = flt.filter(text);
         })
 
         return text;
+    }
+
+    public count(): number {
+        return this.children.length;
+    }
+
+    public getChildren(): FilterInterface[] {
+        return this.children;
     }
 }

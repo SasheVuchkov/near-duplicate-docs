@@ -1,6 +1,6 @@
-export default class WhitespaceFilter {
-    protected punctuationRegex = /[\s]+/gi;
+export default class PunctuationFilter {
+    protected punctuationRegex = /[.,:;?)!(\][}{"]+/gi;
     public filter = (text: string): string => {
-        return text.replace(this.punctuationRegex, ' ');
+        return text.replace(this.punctuationRegex, '');
     }
 }

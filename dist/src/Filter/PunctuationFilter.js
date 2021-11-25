@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class WhitespaceFilter {
+class PunctuationFilter {
     constructor() {
-        this.punctuationRegex = /[\s]+/gi;
+        this.punctuationRegex = /[.,:;?)!(\][}{"]+/gi;
         this.filter = (text) => {
-            return text.replace(this.punctuationRegex, ' ');
+            return text.replace(this.punctuationRegex, '');
         };
     }
 }
-exports.default = WhitespaceFilter;
+exports.default = PunctuationFilter;
 //# sourceMappingURL=PunctuationFilter.js.map

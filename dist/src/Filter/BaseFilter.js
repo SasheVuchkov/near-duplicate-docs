@@ -2,21 +2,27 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class BaseFilter {
     constructor() {
-        this.filters = [];
-        this.addFilter = (filter) => {
-            this.filters.push(filter);
+        this.children = [];
+        this.addChild = (filter) => {
+            this.children.push(filter);
             return this;
         };
-        this.removeFilter = (filter) => {
-            this.filters = this.filters.filter(flt => flt != filter);
+        this.removeChild = (filter) => {
+            this.children = this.children.filter(flt => flt != filter);
             return this;
         };
         this.filter = (text) => {
-            this.filters.forEach(flt => {
+            this.children.forEach(flt => {
                 text = flt.filter(text);
             });
             return text;
         };
+    }
+    count() {
+        return this.children.length;
+    }
+    getChildren() {
+        return this.children;
     }
 }
 exports.default = BaseFilter;
