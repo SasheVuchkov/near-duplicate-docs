@@ -1,56 +1,60 @@
 import fs from "fs";
-import path from 'path';
-import readline from 'readline';
-import {makeFinder} from "./src/NearDuplicatesFinder";
+import path from "path";
+import readline from "readline";
+import { makeFinder } from "./src/NearDuplicatesFinder";
 
-    const auditor = makeFinder({minSimilarity: 0.01, shinglesSize: 5, shinglesType: 'word', signatureLength: 100, rowsPerBand: 5});
+const auditor = makeFinder({
+  minSimilarity: 0.01,
+  shinglesSize: 5,
+  shinglesType: "word",
+  signatureLength: 100,
+  rowsPerBand: 5,
+});
 
-    const process = async() => {
+const process = async () => {
+  let count = 0;
+  try {
+    const fileStream = fs.createReadStream(
+      path.join(__dirname, "..", "datasets", "test.ft.txt")
+    );
 
-        let count = 0;
-    try {
+    const rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity,
+    });
+    // Note: we use the crlfDelay option to recognize all instances of CR LF
+    // ('\r\n') in input.txt as a single line break.
 
-        const fileStream = fs.createReadStream(path.join(__dirname, '..', 'datasets', 'test.ft.txt'));
+    for await (const line of rl) {
+      // Each line in input.txt will be successively available here as `line`.
 
-        const rl = readline.createInterface({
-            input: fileStream,
-            crlfDelay: Infinity
-        });
-        // Note: we use the crlfDelay option to recognize all instances of CR LF
-        // ('\r\n') in input.txt as a single line break.
+      const ln = line.replace(/__label__[0-9] /gi, "");
 
-        for await (const line of rl) {
-            // Each line in input.txt will be successively available here as `line`.
+      await auditor.add(`review${count}`, ln);
 
-            const ln = line.replace(/__label__[0-9] /gi, '');
+      count += 1;
+      //console.log(count);
 
-            await auditor.add(`review${count}`, ln);
+      if (count == 321 || count == 673) {
+        console.log(ln, "<===>");
+      }
 
-            count += 1;
-            //console.log(count);
-
-            if (count == 321 || count == 673) {
-                console.log(ln, '<===>');
-            }
-
-            if (count > 1000) {
-               break;
-            }
-        }
-
-    } catch (err) {
-        console.error(err)
+      if (count > 1000) {
+        break;
+      }
     }
+  } catch (err) {
+    console.error(err);
+  }
 
-    await auditor.start();
+  await auditor.start();
 
-    auditor.on('found_candidates', candidates => console.log(candidates));
-    auditor.on('found_duplicates', duplicates => console.log(duplicates))
+  auditor.on("found_candidates", (candidates) => console.log(candidates));
+  auditor.on("found_duplicates", (duplicates) => console.log(duplicates));
 
-    if (auditor.hasErrors()) {
-        console.log(auditor.getErrors());
-    }
-
-}
+  if (auditor.hasErrors()) {
+    console.log(auditor.getErrors());
+  }
+};
 
 void process();

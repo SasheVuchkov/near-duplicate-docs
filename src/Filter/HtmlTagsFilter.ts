@@ -1,7 +1,7 @@
-import striptags from 'striptags';
+import striptags from "striptags";
 
 export default class HtmlTagsFilter {
-    public filter = (text: string): string => {
-        return striptags(text, [], ' ');
-    }
+  public filter = (text: string): string => {
+    return striptags(text, [], " ");
+  };
 }

@@ -1,3 +1,3 @@
 export default interface FilterInterface {
-    filter(text: string): string;
+  filter(text: string): string;
 }

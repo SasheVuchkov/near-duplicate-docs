@@ -5,10 +5,10 @@ import WhitespaceFilter from "../Filter/WhitespaceFilter";
 import FilterInterface from "../Filter/FilterInterface";
 
 export const baseFilterFactory = (): FilterInterface => {
-    const base = new BaseFilter();
-    base.addChild(new HtmlTagsFilter());
-    base.addChild(new PunctuationFilter());
-    base.addChild(new WhitespaceFilter());
+  const base = new BaseFilter();
+  base.addChild(new HtmlTagsFilter());
+  base.addChild(new PunctuationFilter());
+  base.addChild(new WhitespaceFilter());
 
-    return base;
-}
+  return base;
+};
