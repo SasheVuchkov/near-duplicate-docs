@@ -31,6 +31,7 @@
     "jest": "^27.3.1",
     "node-fetch": "^3.1.0",
     "node-html-parser": "^5.1.0",
+    "pretier": "^0.0.1",
     "typescript": "^4.5.2"
   },
   "dependencies": {
