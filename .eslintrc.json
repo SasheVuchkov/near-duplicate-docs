@@ -2,7 +2,8 @@
   "env": {
     "browser": true,
     "es6": true,
-    "node": true
+    "node": true,
+    "jest/globals": true
   },
   "settings": {
     "import/resolver": {
@@ -15,8 +16,9 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:import/recommended",
-    "plugin:import/electron",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
+    "plugin:import/errors",
+    "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -24,7 +26,9 @@
   },
   "plugins": [
     "@typescript-eslint",
-    "import"
+    "import",
+    "jest",
+    "markdown"
   ],
   "rules": {
     "@typescript-eslint/no-var-requires": 0,

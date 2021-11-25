@@ -5,18 +5,35 @@
   "main": "dist/index.js",
   "author": "Sashe Vuchkov <sashevuchkov@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SasheVuchkov/near-duplicate-docs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SasheVuchkov/near-duplicate-docs/issues"
+  },
+  "tags": [
+    "near-duplicate",
+    "documents",
+    "duplicate documents",
+    "near-duplicate documents",
+    "near-duplicate detection"
+  ],
+  "homepage": "https://github.com/SasheVuchkov/near-duplicate-docs#readme",
   "scripts": {
     "start": "tsc && node dist/index.js",
     "build": "tsc",
     "test": "tsc && jest",
+    "test-coverage": "tsc && jest --coverage",
     "watch:build": "tsc --watch",
-    "lint": "eslint --ext .ts,.tsx ."
+    "lint": "eslint . --cache --ext .ts",
+    "lint:prettier": "prettier "
   },
   "jest": {
     "coverageReporters": [
       "html"
     ],
-    "coverageDirectory": "./coverage",
+    "coverageDirectory": "../coverage",
     "rootDir": "./__tests__"
   },
   "devDependencies": {
@@ -26,15 +43,27 @@
     "@types/jest": "^27.0.3",
     "@types/node": "^16.11.9",
     "@types/striptags": "^3.1.1",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
     "babel-jest": "^27.3.1",
     "eslint": "^8.3.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jest": "^25.3.0",
+    "eslint-plugin-local": "^1.0.0",
+    "eslint-plugin-markdown": "^2.2.1",
+    "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.3.1",
     "node-fetch": "^3.1.0",
     "node-html-parser": "^5.1.0",
-    "pretier": "^0.0.1",
+    "pre-commit": "^1.2.2",
+    "prettier": "^2.5.0",
     "typescript": "^4.5.2"
   },
   "dependencies": {
     "jshashes": "^1.0.8"
-  }
+  },
+  "pre-commit": [
+  ]
 }
