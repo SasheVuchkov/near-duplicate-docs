@@ -7,23 +7,12 @@ class MergeSort {
     sort(data) {
         if (data.length > 1) {
             const middle = Math.floor(data.length / 2);
-            return this.merge(data.splice(0, middle), data.splice(middle));
+            return this.merge(this.sort(data.slice(0, middle)), this.sort(data.slice(middle)));
         }
         return data;
     }
     merge(left, right) {
         const result = [];
-        if (!left && right) {
-            return right;
-        }
-        if (!right && left) {
-            return left;
-        }
-        if (!right && !left) {
-            return result;
-        }
-        left = left;
-        right = right;
         while (left.length > 0 && right.length > 0) {
             if (this.callback(left[0], right[0])) {
                 const el = left === null || left === void 0 ? void 0 : left.shift();
