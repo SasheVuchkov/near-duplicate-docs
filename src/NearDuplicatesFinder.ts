@@ -68,6 +68,8 @@ export default class NearDuplicatesFinder extends EventEmitter {
     for (const row of rows) {
       counter += 1;
 
+      return;
+
       if (!docIds.length) {
         docIds = Object.keys(row);
       }

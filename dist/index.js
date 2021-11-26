@@ -46,11 +46,11 @@ const process = () => __awaiter(void 0, void 0, void 0, function* () {
                 const line = rl_1_1.value;
                 // Each line in input.txt will be successively available here as `line`.
                 const ln = line.replace(/__label__[0-9] /gi, "");
-                yield auditor.add(`review${count}`, ln);
+                auditor.add(`review${count}`, ln);
                 count += 1;
                 //console.log(count);
                 if (count == 321 || count == 673) {
-                    console.log(ln, "<===>");
+                    //console.log(ln, "<===>");
                 }
                 if (count > 1000) {
                     break;
@@ -68,7 +68,7 @@ const process = () => __awaiter(void 0, void 0, void 0, function* () {
     catch (err) {
         console.error(err);
     }
-    yield auditor.start();
+    auditor.start();
     auditor.on("found_candidates", (candidates) => console.log(candidates));
     auditor.on("found_duplicates", (duplicates) => console.log(duplicates));
     if (auditor.hasErrors()) {

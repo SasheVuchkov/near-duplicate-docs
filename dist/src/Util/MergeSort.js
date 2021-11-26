@@ -6,24 +6,41 @@ class MergeSort {
     }
     sort(data) {
         if (data.length > 1) {
-            const middle = Math.floor(data.length / 2);
-            return this.merge(this.sort(data.slice(0, middle)), this.sort(data.slice(middle)));
+            const aux = data.slice(0);
+            this.split(data, aux, 0, data.length - 1);
         }
         return data;
     }
-    merge(left, right) {
-        const result = [];
-        while (left.length > 0 && right.length > 0) {
-            if (this.callback(left[0], right[0])) {
-                const el = left === null || left === void 0 ? void 0 : left.shift();
-                el && result.push(el);
+    split(data, aux, low, high) {
+        if (high <= low) {
+            return;
+        }
+        const middle = Math.floor(low + (high - low) / 2);
+        //Implement async / Promises here / process in parallel
+        this.split(data, aux, low, middle);
+        this.split(data, aux, middle + 1, high);
+        this.merge(data, aux, low, middle, high);
+    }
+    merge(data, aux, low, middle, high) {
+        for (let n = low; n <= high; n++) {
+            aux[n] = data[n];
+        }
+        let i = low;
+        let j = middle + 1;
+        for (let n = low; n <= high; n++) {
+            if (i > middle) {
+                data[n] = aux[j++];
+            }
+            else if (j > high) {
+                data[n] = aux[i++];
+            }
+            else if (this.callback(aux[i], aux[j])) {
+                data[n] = aux[i++];
             }
             else {
-                const el = right === null || right === void 0 ? void 0 : right.shift();
-                el && result.push(el);
+                data[n] = aux[j++];
             }
         }
-        return [...result, ...left, ...right];
     }
 }
 exports.default = MergeSort;

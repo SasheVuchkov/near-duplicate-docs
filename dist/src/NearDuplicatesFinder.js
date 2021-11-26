@@ -43,6 +43,7 @@ class NearDuplicatesFinder extends events_1.EventEmitter {
         let docIds = [];
         for (const row of rows) {
             counter += 1;
+            return;
             if (!docIds.length) {
                 docIds = Object.keys(row);
             }

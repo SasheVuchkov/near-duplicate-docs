@@ -40,7 +40,6 @@ describe("Testing Utils/MergeSort class", () => {
     test.each(numbers)("%s", (testCase, arr, callback, expected) => {
         const algo = new MergeSort_1.default(callback);
         const sorted = algo.sort(arr);
-        console.log(sorted);
         expect(sorted.length).toEqual(expected.length);
         expected.forEach((val, index) => {
             expect(sorted[index]).toEqual(val);

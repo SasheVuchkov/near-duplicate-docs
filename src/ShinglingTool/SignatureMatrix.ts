@@ -85,7 +85,6 @@ export default class SignatureMatrix {
       const integer: number = typeof key === "string" ? this.hasher(key) : key;
       result.push([key, integer ^ salt]);
     });
-
     return this.sortAlgo.sort(result);
   }
 

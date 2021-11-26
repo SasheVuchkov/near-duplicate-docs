@@ -7,28 +7,45 @@ export default class MergeSort<T> {
 
   public sort(data: T[]): T[] {
     if (data.length > 1) {
-      const middle = Math.floor(data.length / 2);
-      return this.merge(
-        this.sort(data.slice(0, middle)),
-        this.sort(data.slice(middle))
-      );
+      const aux = data.slice(0);
+      this.split(data, aux, 0, data.length - 1);
     }
 
     return data;
   }
 
-  protected merge(left: T[], right: T[]): T[] {
-    const result: T[] = [];
-    while (left.length > 0 && right.length > 0) {
-      if (this.callback(left[0], right[0])) {
-        const el = left?.shift() as T;
-        el && result.push(el);
+  protected split(data: T[], aux: T[], low: number, high: number): void {
+    if (high <= low) {
+      return;
+    }
+    const middle = Math.floor(low + (high - low) / 2);
+    this.split(data, aux, low, middle);
+    this.split(data, aux, middle + 1, high);
+    this.merge(data, aux, low, middle, high);
+  }
+
+  protected merge(
+    data: T[],
+    aux: T[],
+    low: number,
+    middle: number,
+    high: number
+  ): void {
+    for (let n = low; n <= high; n++) {
+      aux[n] = data[n];
+    }
+    let i = low;
+    let j = middle + 1;
+    for (let n = low; n <= high; n++) {
+      if (i > middle) {
+        data[n] = aux[j++];
+      } else if (j > high) {
+        data[n] = aux[i++];
+      } else if (this.callback(aux[i], aux[j])) {
+        data[n] = aux[i++];
       } else {
-        const el = right?.shift() as T;
-        el && result.push(el);
+        data[n] = aux[j++];
       }
     }
-
-    return [...result, ...left, ...right];
   }
 }

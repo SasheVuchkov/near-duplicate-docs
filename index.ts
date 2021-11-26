@@ -30,13 +30,13 @@ const process = async () => {
 
       const ln = line.replace(/__label__[0-9] /gi, "");
 
-      await auditor.add(`review${count}`, ln);
+      auditor.add(`review${count}`, ln);
 
       count += 1;
       //console.log(count);
 
       if (count == 321 || count == 673) {
-        console.log(ln, "<===>");
+        //console.log(ln, "<===>");
       }
 
       if (count > 1000) {
@@ -47,7 +47,7 @@ const process = async () => {
     console.error(err);
   }
 
-  await auditor.start();
+  auditor.start();
 
   auditor.on("found_candidates", (candidates) => console.log(candidates));
   auditor.on("found_duplicates", (duplicates) => console.log(duplicates));
