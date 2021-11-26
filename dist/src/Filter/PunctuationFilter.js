@@ -4,7 +4,7 @@ class PunctuationFilter {
     constructor() {
         this.punctuationRegex = /[.,:;?)!(\][}{"]+/gi;
         this.filter = (text) => {
-            return text.replace(this.punctuationRegex, '');
+            return text.replace(this.punctuationRegex, "");
         };
     }
 }

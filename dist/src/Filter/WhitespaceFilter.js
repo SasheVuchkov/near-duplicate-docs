@@ -4,7 +4,7 @@ class WhitespaceFilter {
     constructor() {
         this.punctuationRegex = /[\s]+/gi;
         this.filter = (text) => {
-            return text.replace(this.punctuationRegex, ' ');
+            return text.replace(this.punctuationRegex, " ");
         };
     }
 }

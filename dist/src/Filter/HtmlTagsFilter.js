@@ -7,7 +7,7 @@ const striptags_1 = __importDefault(require("striptags"));
 class HtmlTagsFilter {
     constructor() {
         this.filter = (text) => {
-            return (0, striptags_1.default)(text, [], ' ');
+            return (0, striptags_1.default)(text, [], " ");
         };
     }
 }

@@ -23,15 +23,21 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const readline_1 = __importDefault(require("readline"));
 const NearDuplicatesFinder_1 = require("./src/NearDuplicatesFinder");
-const auditor = (0, NearDuplicatesFinder_1.makeFinder)({ minSimilarity: 0.01, shinglesSize: 5, shinglesType: 'word', signatureLength: 100, rowsPerBand: 5 });
+const auditor = (0, NearDuplicatesFinder_1.makeFinder)({
+    minSimilarity: 0.01,
+    shinglesSize: 5,
+    shinglesType: "word",
+    signatureLength: 100,
+    rowsPerBand: 5,
+});
 const process = () => __awaiter(void 0, void 0, void 0, function* () {
     var e_1, _a;
     let count = 0;
     try {
-        const fileStream = fs_1.default.createReadStream(path_1.default.join(__dirname, '..', 'datasets', 'test.ft.txt'));
+        const fileStream = fs_1.default.createReadStream(path_1.default.join(__dirname, "..", "datasets", "test.ft.txt"));
         const rl = readline_1.default.createInterface({
             input: fileStream,
-            crlfDelay: Infinity
+            crlfDelay: Infinity,
         });
         try {
             // Note: we use the crlfDelay option to recognize all instances of CR LF
@@ -39,12 +45,12 @@ const process = () => __awaiter(void 0, void 0, void 0, function* () {
             for (var rl_1 = __asyncValues(rl), rl_1_1; rl_1_1 = yield rl_1.next(), !rl_1_1.done;) {
                 const line = rl_1_1.value;
                 // Each line in input.txt will be successively available here as `line`.
-                const ln = line.replace(/__label__[0-9] /gi, '');
+                const ln = line.replace(/__label__[0-9] /gi, "");
                 yield auditor.add(`review${count}`, ln);
                 count += 1;
                 //console.log(count);
                 if (count == 321 || count == 673) {
-                    console.log(ln, '<===>');
+                    console.log(ln, "<===>");
                 }
                 if (count > 1000) {
                     break;
@@ -63,8 +69,8 @@ const process = () => __awaiter(void 0, void 0, void 0, function* () {
         console.error(err);
     }
     yield auditor.start();
-    auditor.on('found_candidates', candidates => console.log(candidates));
-    auditor.on('found_duplicates', duplicates => console.log(duplicates));
+    auditor.on("found_candidates", (candidates) => console.log(candidates));
+    auditor.on("found_duplicates", (duplicates) => console.log(duplicates));
     if (auditor.hasErrors()) {
         console.log(auditor.getErrors());
     }

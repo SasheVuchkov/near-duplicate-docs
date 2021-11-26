@@ -7,8 +7,8 @@ const HtmlTagsFilter_1 = __importDefault(require("../../src/Filter/HtmlTagsFilte
 const BaseFilter_1 = __importDefault(require("../../src/Filter/BaseFilter"));
 const PunctuationFilter_1 = __importDefault(require("../../src/Filter/PunctuationFilter"));
 const WhitespaceFilter_1 = __importDefault(require("../../src/Filter/WhitespaceFilter"));
-describe('Testing BaseFilter class', () => {
-    test('Adding a child filter', () => {
+describe("Testing BaseFilter class", () => {
+    test("Adding a child filter", () => {
         const filter = new BaseFilter_1.default();
         //The filter doesn't have children
         expect(filter.count()).toEqual(0);
@@ -20,7 +20,7 @@ describe('Testing BaseFilter class', () => {
         //Let's be sure that the only child is the filter we added earlier
         expect(children).toContain(child);
     });
-    test('Child must be applied in the order of addition', () => {
+    test("Child must be applied in the order of addition", () => {
         const filter = new BaseFilter_1.default();
         const child1 = new HtmlTagsFilter_1.default();
         filter.addChild(child1);
@@ -33,7 +33,7 @@ describe('Testing BaseFilter class', () => {
         expect(children[1]).toEqual(child2);
         expect(children[2]).toEqual(child3);
     });
-    test('Removing a child', () => {
+    test("Removing a child", () => {
         const filter = new BaseFilter_1.default();
         const child = new HtmlTagsFilter_1.default();
         expect(filter.count()).toEqual(0);
@@ -42,7 +42,7 @@ describe('Testing BaseFilter class', () => {
         filter.removeChild(child);
         expect(filter.count()).toEqual(0);
     });
-    test('Each child filter must be applied once', () => {
+    test("Each child filter must be applied once", () => {
         const base = new BaseFilter_1.default();
         const child1 = new HtmlTagsFilter_1.default();
         const child2 = new PunctuationFilter_1.default();
@@ -55,7 +55,7 @@ describe('Testing BaseFilter class', () => {
         base.addChild(child1);
         base.addChild(child2);
         //Run the base filter method
-        base.filter('Some text');
+        base.filter("Some text");
         //Check the number of calls
         expect(filter1.mock.calls.length).toEqual(1);
         expect(filter2.mock.calls.length).toEqual(1);

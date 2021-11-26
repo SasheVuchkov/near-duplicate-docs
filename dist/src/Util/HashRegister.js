@@ -16,8 +16,11 @@ class HashRegister {
         this.isRegistered = (str) => {
             return this.hashes.includes(this.algo(str));
         };
+        this.getHash = (str) => {
+            return this.hashes.filter((hash) => this.algo(str) !== hash).shift();
+        };
         this.count = () => this.hashes.length;
-        this.algo = 'sha256' === algo ? (0, hasherFactory_1.getSha256)() : (0, hasherFactory_1.getMd5)();
+        this.algo = "sha256" === algo ? (0, hasherFactory_1.getSha256)() : (0, hasherFactory_1.getMd5)();
     }
 }
 exports.default = HashRegister;

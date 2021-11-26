@@ -7,7 +7,6 @@ const hasherFactory_1 = require("../Factory/hasherFactory");
 const MergeSort_1 = __importDefault(require("../Util/MergeSort"));
 class SignatureMatrix {
     constructor(sigLength) {
-        this.rows = {};
         this.sortAlgo = new MergeSort_1.default((left, right) => left[1] < right[1]);
         this.salts = this.generateSalts(sigLength);
         this.sigLength = sigLength;
@@ -32,23 +31,17 @@ class SignatureMatrix {
     }
     minHash(shuffledKeys, matrix, salt) {
         const localRows = {};
-        shuffledKeys === null || shuffledKeys === void 0 ? void 0 : shuffledKeys.forEach(key => {
+        shuffledKeys === null || shuffledKeys === void 0 ? void 0 : shuffledKeys.forEach((key) => {
             const payload = matrix.getPayload(key[0]);
-            payload === null || payload === void 0 ? void 0 : payload.forEach(item => {
-                if (typeof this.rows[item[1]] === 'undefined') {
-                    this.rows[item[1]] = {};
-                }
-                if (typeof localRows[item[1]] === 'undefined') {
+            payload === null || payload === void 0 ? void 0 : payload.forEach((item) => {
+                if (typeof localRows[item[1]] === "undefined") {
                     localRows[item[1]] = {};
                 }
-                const min = this.rows[item[1]][salt];
-                const min2 = localRows[item[1]][salt];
-                if (typeof min === 'undefined') {
-                    this.rows[item[1]][salt] = key[1];
+                const min = localRows[item[1]][salt];
+                if (typeof min === "undefined") {
                     localRows[item[1]][salt] = key[1];
                     return;
                 }
-                this.rows[item[1]][salt] = min > key[1] ? key[1] : min;
                 localRows[item[1]][salt] = min > key[1] ? key[1] : min;
             });
         });
@@ -56,8 +49,8 @@ class SignatureMatrix {
     }
     shuffleKeys(keys, salt) {
         const result = [];
-        keys.forEach(key => {
-            const integer = typeof key === 'string' ? this.hasher(key) : key;
+        keys.forEach((key) => {
+            const integer = typeof key === "string" ? this.hasher(key) : key;
             result.push([key, integer ^ salt]);
         });
         return this.sortAlgo.sort(result);
@@ -68,18 +61,6 @@ class SignatureMatrix {
             salts.push(Math.floor(Math.random() * 99999999));
         }
         return salts;
-    }
-    addItem(key, salt, payload) {
-        if (!this.rows[key]) {
-            this.rows[key][salt] = payload;
-            return this;
-        }
-        this.rows[key][salt] = payload;
-        return this;
-    }
-    setItems(key, payload) {
-        this.rows[key] = payload;
-        return this;
     }
 }
 exports.default = SignatureMatrix;

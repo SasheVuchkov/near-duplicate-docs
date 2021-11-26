@@ -23,6 +23,9 @@ export default class HashRegister {
     return this.hashes.includes(this.algo(str));
   };
 
+  public getHash = (str: string): string | undefined => {
+    return this.hashes.filter((hash) => this.algo(str) !== hash).shift();
+  };
   public count = (): number => this.hashes.length;
 }
 

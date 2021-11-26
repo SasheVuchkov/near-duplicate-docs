@@ -18,7 +18,7 @@ class SparseMatrix {
         const shingles = {};
         for (const shingle in this.rows) {
             for (const docId of docIds) {
-                const docs = this.rows[shingle].filter(item => docId === item[1]);
+                const docs = this.rows[shingle].filter((item) => docId === item[1]);
                 if (docs.length > 0) {
                     shingles[docId] = (_a = shingles[docId]) !== null && _a !== void 0 ? _a : [];
                     shingles[docId].push(shingle);

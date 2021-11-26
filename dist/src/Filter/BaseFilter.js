@@ -8,11 +8,11 @@ class BaseFilter {
             return this;
         };
         this.removeChild = (filter) => {
-            this.children = this.children.filter(flt => flt != filter);
+            this.children = this.children.filter((flt) => flt != filter);
             return this;
         };
         this.filter = (text) => {
-            this.children.forEach(flt => {
+            this.children.forEach((flt) => {
                 text = flt.filter(text);
             });
             return text;

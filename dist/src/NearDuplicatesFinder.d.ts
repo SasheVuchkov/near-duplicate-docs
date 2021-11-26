@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { EventEmitter } from 'events';
+import { EventEmitter } from "events";
 import FilterInterface from "./Filter/FilterInterface";
 import ShinglingTool from "./ShinglingTool/ShinglingTool";
 import SparseMatrix from "./ShinglingTool/SparseMatrix";
@@ -25,16 +25,16 @@ export default class NearDuplicatesFinder extends EventEmitter {
     protected hashRegister: HashRegister;
     protected errors: any[];
     constructor(config: Config, shinglesMatrix: SparseMatrix, signatureMatrix: SignatureMatrix, shinglingTool: ShinglingTool, filter?: FilterInterface);
-    add: (docId: string, text: string) => Promise<void>;
-    start(): Promise<void>;
+    add: (docId: string, text: string) => void;
+    start(): void;
     findCandidates(docIds: string[], vectors: {
         [id: string]: number[];
-    }): Promise<Bucket>;
-    findDuplicates(candidates: string[][]): Promise<void>;
+    }): Bucket;
+    findDuplicates(candidates: string[][]): void;
     compress(bucket: Bucket): void;
     compare(docIds: string[], shingles: {
         [docId: string]: (string | number)[];
-    }): Promise<void>;
+    }): void;
     protected compareShingles(s1: (string | number)[], s2: (string | number)[]): number;
     hasErrors(): boolean;
     getErrors(): any[];
@@ -42,7 +42,7 @@ export default class NearDuplicatesFinder extends EventEmitter {
 export declare const makeFinder: (config: {
     minSimilarity: number;
     shinglesSize: number;
-    shinglesType: 'char' | 'word';
+    shinglesType: "char" | "word";
     signatureLength: number;
     rowsPerBand: number;
 }) => NearDuplicatesFinder;
