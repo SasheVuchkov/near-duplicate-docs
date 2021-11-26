@@ -14,3 +14,5 @@ I'm no expert (yet) on topics like Data Science and Natural Language Processing,
 Given the excellent stuff I learned and implemented, I believe the library will be suitable for processing collections of up to a million documents (on an end-user laptop). It can handle even more docs (in a reasonable time) if some parallelism and cloud computing is involved.
 
 __That is just a hypothesis at the moment because the library is under development.__
+
+*Copyright (c) Alexander Yuriev Vuchkov*
