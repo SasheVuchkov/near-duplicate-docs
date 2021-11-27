@@ -22,7 +22,7 @@ class NearDuplicatesFinder extends events_1.EventEmitter {
         this.add = (docId, text) => {
             text = this.filter ? this.filter.filter(text) : text;
             this.shinglingTool.process(docId, text, (docId, shingle) => {
-                this.shinglesMatrix.addItem(shingle, docId);
+                this.shinglesMatrix.addItem(shingle.toString(), docId);
             });
             this.emit("doc_added", docId);
         };

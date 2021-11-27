@@ -32,37 +32,10 @@ class SparseMatrix {
             this.rows[key] = [[1, payload]];
             return this;
         }
-        this.rows[key] = this.rows[key].sort((a, b) => {
-            if (a < b) {
-                return -1;
-            }
-            if (a > b) {
-                return 1;
-            }
-            return 0;
+        this.rows[key].forEach((payload) => {
+            payload[0] += 1;
         });
-        const found = this.search(payload, this.rows[key]);
-        if (found && found[0]) {
-            found[0] += 1;
-            return this;
-        }
-        this.rows[key].push([1, payload]);
         return this;
-    }
-    search(payload, rows) {
-        const index = Math.floor(rows.length / 2);
-        const leftHalf = rows.slice(0, index);
-        const lastItem = leftHalf.pop();
-        if (!lastItem) {
-            return;
-        }
-        if (lastItem && lastItem[1] < payload) {
-            return this.search(payload, rows.slice(index));
-        }
-        if (lastItem && lastItem[1] > payload) {
-            return this.search(payload, leftHalf);
-        }
-        return lastItem;
     }
 }
 exports.default = SparseMatrix;

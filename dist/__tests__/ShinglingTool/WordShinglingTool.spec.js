@@ -29,7 +29,6 @@ describe("Testing ShinglingTool/StringShinglingTool class", () => {
         tool.process("randomId", text, (docId, shingle) => {
             shingles.push(shingle);
         });
-        console.log(shingles);
         expect(shingles.length).toEqual(expected.length);
         shingles.forEach((sh, index) => {
             expect(sh).toEqual(expected[index]);

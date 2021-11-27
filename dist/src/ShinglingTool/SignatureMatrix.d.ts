@@ -11,12 +11,12 @@ export default class SignatureMatrix {
     protected sigLength: number;
     protected hasher: (str: string) => number;
     protected matrix: SparseMatrix | undefined;
-    protected sortAlgo: MergeSort<[number | string, number]>;
+    protected sortAlgo: MergeSort<[string, number]>;
     constructor(sigLength: number);
     getSignatureLength(): number;
     getSignatureRows(): Generator<MatrixData>;
     fromSparseMatrix(matrix: SparseMatrix): SignatureMatrix;
-    protected minHash(shuffledKeys: [string | number, number][], matrix: SparseMatrix, salt: string): MatrixData;
-    protected shuffleKeys(keys: (string | number)[], salt: number): [number | string, number][];
+    protected minHash(shuffledKeys: [string, number][], matrix: SparseMatrix, salt: string): MatrixData;
+    protected shuffleKeys(keys: string[], salt: number): [string, number][];
     protected generateSalts(length: number): number[];
 }

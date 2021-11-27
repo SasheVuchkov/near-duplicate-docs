@@ -10,8 +10,8 @@ export default class SignatureMatrix {
   protected sigLength: number;
   protected hasher: (str: string) => number;
   protected matrix: SparseMatrix | undefined;
-  protected sortAlgo: MergeSort<[number | string, number]> = new MergeSort<
-    [number | string, number]
+  protected sortAlgo: MergeSort<[string, number]> = new MergeSort<
+    [string, number]
   >(
     (
       left: [number | string, number],
@@ -48,7 +48,7 @@ export default class SignatureMatrix {
   }
 
   protected minHash(
-    shuffledKeys: [string | number, number][],
+    shuffledKeys: [string, number][],
     matrix: SparseMatrix,
     salt: string
   ): MatrixData {
@@ -76,14 +76,14 @@ export default class SignatureMatrix {
     return localRows;
   }
 
-  protected shuffleKeys(
-    keys: (string | number)[],
-    salt: number
-  ): [number | string, number][] {
-    const result: [number | string, number][] = [];
+  protected shuffleKeys(keys: string[], salt: number): [string, number][] {
+    const result: [string, number][] = [];
     keys.forEach((key) => {
-      const integer: number = typeof key === "string" ? this.hasher(key) : key;
-      result.push([key, integer ^ salt]);
+      const integer: number = new Number(key).valueOf();
+      result.push([
+        key,
+        (Number.isNaN(integer) ? this.hasher(key) : integer.valueOf()) ^ salt,
+      ]);
     });
     return this.sortAlgo.sort(result);
   }

@@ -46,7 +46,7 @@ export default class NearDuplicatesFinder extends EventEmitter {
   public add = (docId: string, text: string): void => {
     text = this.filter ? this.filter.filter(text) : text;
     this.shinglingTool.process(docId, text, (docId: string, shingle) => {
-      this.shinglesMatrix.addItem(shingle, docId);
+      this.shinglesMatrix.addItem(shingle.toString(), docId);
     });
 
     this.emit("doc_added", docId);

@@ -50,8 +50,11 @@ class SignatureMatrix {
     shuffleKeys(keys, salt) {
         const result = [];
         keys.forEach((key) => {
-            const integer = typeof key === "string" ? this.hasher(key) : key;
-            result.push([key, integer ^ salt]);
+            const integer = new Number(key).valueOf();
+            result.push([
+                key,
+                (Number.isNaN(integer) ? this.hasher(key) : integer.valueOf()) ^ salt,
+            ]);
         });
         return this.sortAlgo.sort(result);
     }
