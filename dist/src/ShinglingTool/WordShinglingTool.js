@@ -6,7 +6,11 @@ class WordShinglingTool extends BaseShinglingTool_1.BaseShinglingTool {
         const items = text.split(" ");
         let startPosition = 0;
         let endPosition = this.shingleSize;
-        while (endPosition < items.length) {
+        if (text.length > 0 && items.length < this.shingleSize) {
+            callback(docId, text);
+            return;
+        }
+        while (endPosition <= items.length) {
             const shingle = this.hasher(items.slice(startPosition, endPosition).join(" "));
             callback(docId, shingle);
             startPosition += 1;

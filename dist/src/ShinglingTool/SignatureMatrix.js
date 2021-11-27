@@ -53,15 +53,7 @@ class SignatureMatrix {
             const integer = typeof key === "string" ? this.hasher(key) : key;
             result.push([key, integer ^ salt]);
         });
-        console.time("Native");
-        const sorted1 = result.sort((a, b) => a[1] - b[1]);
-        console.timeEnd("Native");
-        console.log(sorted1[0][1], sorted1[1][1]);
-        console.time("MergeSort");
-        const sorted = this.sortAlgo.sort(result);
-        console.timeEnd("MergeSort");
-        console.log(sorted[0][1], sorted[1][1]);
-        return sorted;
+        return this.sortAlgo.sort(result);
     }
     generateSalts(length) {
         const salts = [];

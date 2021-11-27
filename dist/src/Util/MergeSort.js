@@ -16,7 +16,6 @@ class MergeSort {
             return;
         }
         const middle = Math.floor(low + (high - low) / 2);
-        //Implement async / Promises here / process in parallel
         this.split(data, aux, low, middle);
         this.split(data, aux, middle + 1, high);
         this.merge(data, aux, low, middle, high);

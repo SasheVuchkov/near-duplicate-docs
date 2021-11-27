@@ -1,20 +1,26 @@
 import { BaseShinglingTool } from "./BaseShinglingTool";
+import { Shingle } from "./ShinglingTool";
 
 export default class StringShinglingTool extends BaseShinglingTool {
   public process(
     docId: string,
     text: string,
-    callback: (docId: string, shingle: number) => void
+    callback: (docId: string, shingle: Shingle) => void
   ): void {
     const items = [...text];
-    const startPosition = 0;
+    let startPosition = 0;
     let endPosition = this.shingleSize;
 
-    while (endPosition < items.length) {
-      const shingle: number = this.hasher(
+    if (text.length > 0 && text.length < this.shingleSize) {
+      callback(docId, text);
+      return;
+    }
+    while (endPosition <= items.length) {
+      const shingle: Shingle = this.hasher(
         items.slice(startPosition, endPosition).join("")
       );
       callback(docId, shingle);
+      startPosition += 1;
       endPosition += 1;
     }
   }
