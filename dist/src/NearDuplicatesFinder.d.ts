@@ -1,48 +1,26 @@
 /// <reference types="node" />
 import { EventEmitter } from "events";
-import FilterInterface from "./Filter/FilterInterface";
-import ShinglingTool, { Shingle } from "./ShinglingTool/ShinglingTool";
-import SparseMatrix from "./ShinglingTool/SparseMatrix";
-import SignatureMatrix from "./ShinglingTool/SignatureMatrix";
-import HashRegister from "./Util/HashRegister";
-export declare type Bucket = {
-    [hash: string]: string[];
-};
+import { Shingle } from "./ShinglingTool/ShinglingTool";
+import CandidateDuplicatesFinder from "./CandidateDuplicatesFinder";
 export declare type Config = {
-    rowsPerBand: number;
     minSimilarity: number;
 };
+export declare type Duplicates = {
+    [id: string]: [number, string][];
+};
 export default class NearDuplicatesFinder extends EventEmitter {
-    protected shinglesMatrix: SparseMatrix;
-    protected signatureMatrix: SignatureMatrix;
-    protected filter?: FilterInterface;
-    protected shinglingTool: ShinglingTool;
-    protected candidates: string[][];
-    protected duplicates: {
-        [id: string]: [number, string][];
-    };
+    protected duplicates: Duplicates;
     protected config: Config;
-    protected hashRegister: HashRegister;
     protected errors: any[];
-    constructor(config: Config, shinglesMatrix: SparseMatrix, signatureMatrix: SignatureMatrix, shinglingTool: ShinglingTool, filter?: FilterInterface);
+    protected candidatesFinder: CandidateDuplicatesFinder;
+    constructor(config: Config, candidatesFinder: CandidateDuplicatesFinder);
     add: (docId: string, text: string) => void;
-    start(): void;
-    findCandidates(docIds: string[], vectors: {
-        [id: string]: number[];
-    }): Bucket;
-    findDuplicates(candidates: string[][]): void;
-    compress(bucket: Bucket): void;
-    compare(docIds: string[], shingles: {
+    search(): Duplicates;
+    protected process(candidates: string[][]): Duplicates;
+    protected compare(docIds: string[], shingles: {
         [docId: string]: [number, Shingle][];
     }): void;
     protected compareShingles(s1: [number, Shingle][], s2: [number, Shingle][]): number;
     hasErrors(): boolean;
     getErrors(): any[];
 }
-export declare const makeFinder: (config: {
-    minSimilarity: number;
-    shinglesSize: number;
-    shinglesType: "char" | "word";
-    signatureLength: number;
-    rowsPerBand: number;
-}) => NearDuplicatesFinder;

@@ -20,7 +20,7 @@ describe("Testing ShinglingTool/SignatureMatrix class", () => {
         shinglingMatrix.addItem("but with sloths", "document1");
         shinglingMatrix.addItem("and giant ladybugs", "document1");
         const noMatrixResult = matrix.getSignatureRows();
-        expect(noMatrixResult.next()).toEqual({ "done": true, "value": undefined });
+        expect(noMatrixResult.next()).toEqual({ done: true, value: undefined });
         matrix.fromSparseMatrix(shinglingMatrix);
         const expectedCount = 3;
         const expectedRows = [

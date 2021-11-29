@@ -1,5 +1,5 @@
-import SignatureMatrix from "../../src/ShinglingTool/SignatureMatrix";
-import SparseMatrix from "../../src/ShinglingTool/SparseMatrix";
+import SignatureMatrix from "../../../src/ShinglingTool/SignatureMatrix";
+import SparseMatrix from "../../../src/ShinglingTool/SparseMatrix";
 
 describe("Testing ShinglingTool/SignatureMatrix class", () => {
   let generatorCalled = 0;
@@ -28,9 +28,9 @@ describe("Testing ShinglingTool/SignatureMatrix class", () => {
     const expectedCount = 3;
     const expectedRows = [
       undefined,
-      { document1: { "555": 4466002 } },
-      { document1: { "666": 4466147 } },
-      { document1: { "777": 4465776 } },
+      { document1: { "555": 71910738 } },
+      { document1: { "666": 71910883 } },
+      { document1: { "777": 71910512 } },
     ];
 
     let count = 0;

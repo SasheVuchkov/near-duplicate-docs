@@ -1,4 +1,4 @@
-import HtmlTagsFilter from "../../src/Filter/HtmlTagsFilter";
+import HtmlTagsFilter from "../../../src/Filter/HtmlTagsFilter";
 
 describe("Testing HtmlTagasFilter class", () => {
   const filter = new HtmlTagsFilter();

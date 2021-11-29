@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const BaseShinglingTool_1 = require("./BaseShinglingTool");
 class WordShinglingTool extends BaseShinglingTool_1.BaseShinglingTool {
     process(docId, text, callback) {
+        text = this.filter ? this.filter.filter(text) : text;
         const items = text.split(" ");
         let startPosition = 0;
         let endPosition = this.shingleSize;

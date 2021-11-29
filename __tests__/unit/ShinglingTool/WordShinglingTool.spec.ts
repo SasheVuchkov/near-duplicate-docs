@@ -1,5 +1,5 @@
-import { Shingle } from "../../src/ShinglingTool/ShinglingTool";
-import WordShinglingTool from "../../src/ShinglingTool/WordShinglingTool";
+import { Shingle } from "../../../src/ShinglingTool/ShinglingTool";
+import WordShinglingTool from "../../../src/ShinglingTool/WordShinglingTool";
 
 describe("Testing ShinglingTool/StringShinglingTool class", () => {
   const tool = new WordShinglingTool(

@@ -1,4 +1,4 @@
-import HashRegister, { makeHashRegister } from "../../src/Util/HashRegister";
+import HashRegister, { makeHashRegister } from "../../../src/Util/HashRegister";
 describe("Testing Utils/HashRegister class", () => {
   test("Test case: The register is empty", () => {
     const register = new HashRegister("md5");

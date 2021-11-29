@@ -1,157 +1,70 @@
 import { EventEmitter } from "events";
 
-import FilterInterface from "./Filter/FilterInterface";
-import ShinglingTool, { Shingle } from "./ShinglingTool/ShinglingTool";
-import SparseMatrix from "./ShinglingTool/SparseMatrix";
-import StringShinglingTool from "./ShinglingTool/StringShinglingTool";
-import { getCompactHasher } from "./Factory/hasherFactory";
-import WordShinglingTool from "./ShinglingTool/WordShinglingTool";
-import { baseFilterFactory } from "./Factory/filterFactory";
-import SignatureMatrix from "./ShinglingTool/SignatureMatrix";
-import HashRegister from "./Util/HashRegister";
-import saltGenerator from "./Util/SaltGenerator";
+import { Shingle } from "./ShinglingTool/ShinglingTool";
+import CandidateDuplicatesFinder from "./CandidateDuplicatesFinder";
 
-export type Bucket = { [hash: string]: string[] };
-export type Config = { rowsPerBand: number; minSimilarity: number };
+export type Config = { minSimilarity: number };
+export type Duplicates = { [id: string]: [number, string][] };
 
 export default class NearDuplicatesFinder extends EventEmitter {
-  protected shinglesMatrix: SparseMatrix;
-  protected signatureMatrix: SignatureMatrix;
-
-  protected filter?: FilterInterface;
-  protected shinglingTool: ShinglingTool;
-  protected candidates: string[][] = [];
-  protected duplicates: { [id: string]: [number, string][] } = {};
-
+  protected duplicates: Duplicates = {};
   protected config: Config;
-  protected hashRegister: HashRegister = new HashRegister("md5");
-
   protected errors: any[] = [];
+  protected candidatesFinder: CandidateDuplicatesFinder;
 
   public constructor(
     config: Config,
-    shinglesMatrix: SparseMatrix,
-    signatureMatrix: SignatureMatrix,
-    shinglingTool: ShinglingTool,
-    filter?: FilterInterface
+    candidatesFinder: CandidateDuplicatesFinder
   ) {
     super();
     this.config = config;
+    this.candidatesFinder = candidatesFinder;
 
-    this.shinglesMatrix = shinglesMatrix;
-    this.signatureMatrix = signatureMatrix;
-    this.shinglingTool = shinglingTool;
-    this.filter = filter;
+    this.candidatesFinder.on("found_candidates", (candidates) => {
+      this.emit("found_candidates", candidates);
+    });
+
+    this.candidatesFinder.on("search", () => {
+      this.emit("candidates_search");
+    });
+
+    this.candidatesFinder.on("finish", (candidates) => {
+      this.emit("end_candidates_search", candidates);
+    });
   }
 
   public add = (docId: string, text: string): void => {
-    text = this.filter ? this.filter.filter(text) : text;
-    this.shinglingTool.process(docId, text, (docId: string, shingle) => {
-      this.shinglesMatrix.addItem(shingle.toString(), docId);
-    });
-
+    this.candidatesFinder.add(docId, text);
     this.emit("doc_added", docId);
   };
 
-  public start() {
-    this.emit("start");
+  public search(): Duplicates {
+    this.emit("search");
 
-    this.signatureMatrix.fromSparseMatrix(this.shinglesMatrix);
+    const candidates = this.candidatesFinder.search();
+    const duplicates = this.process(candidates);
 
-    const rows = this.signatureMatrix.getSignatureRows();
-    const rowsPerBand = this.config.rowsPerBand;
-    const currentVectors: { [id: string]: number[] }[] = [];
-    let counter = 0;
-    let bandKey = 0;
-
-    let docIds: string[] = [];
-
-    for (const row of rows) {
-      counter += 1;
-
-      return;
-
-      if (!docIds.length) {
-        docIds = Object.keys(row);
-      }
-
-      for (const docId of docIds) {
-        const vectorPoint: number = Object.entries(row[docId])[0][1];
-
-        if (!currentVectors[bandKey]) {
-          currentVectors[bandKey] = {};
-        }
-
-        if (!currentVectors[bandKey][docId]) {
-          currentVectors[bandKey][docId] = [];
-        }
-
-        currentVectors[bandKey][docId].push(vectorPoint);
-      }
-
-      if (
-        counter < this.signatureMatrix.getSignatureLength() &&
-        counter % rowsPerBand != 0
-      ) {
-        continue;
-      }
-
-      const bucket = this.findCandidates([...docIds], currentVectors[bandKey]);
-      this.compress(bucket);
-
-      bandKey += 1;
-    }
-
-    this.findDuplicates(this.candidates);
-    console.log(this.duplicates);
-
-    this.emit("finish");
+    this.emit("finish", duplicates);
+    return duplicates;
   }
 
-  public findCandidates(
-    docIds: string[],
-    vectors: { [id: string]: number[] }
-  ): Bucket {
-    const bucket: Bucket = {};
-    for (const doc of docIds) {
-      const hash = vectors[doc].reduce((a, b) => a + b);
-      if (!bucket[hash]) {
-        bucket[hash] = [];
-      }
-
-      bucket[hash].push(doc);
-    }
-
-    return bucket;
-  }
-
-  public findDuplicates(candidates: string[][]) {
+  protected process(candidates: string[][]) {
     let docIds: string[] = [];
 
     candidates.forEach((item) => {
       docIds = docIds.concat(item);
     });
 
-    const docsShingles = this.shinglesMatrix.getDocShingles(docIds);
+    const docsShingles = this.candidatesFinder.getDocShingles(docIds);
 
     for (const pair of candidates) {
       this.compare(pair, docsShingles);
     }
+
+    return this.duplicates;
   }
 
-  public compress(bucket: Bucket): void {
-    for (const hash in bucket) {
-      if (
-        bucket[hash].length > 1 &&
-        !this.hashRegister.check(bucket[hash].join(""))
-      ) {
-        this.candidates.push(bucket[hash]);
-        this.emit("found_candidates", bucket[hash]);
-      }
-    }
-  }
-
-  public compare(
+  protected compare(
     docIds: string[],
     shingles: { [docId: string]: [number, Shingle][] }
   ) {
@@ -221,32 +134,3 @@ export default class NearDuplicatesFinder extends EventEmitter {
     return this.errors;
   }
 }
-
-export const makeFinder = (config: {
-  minSimilarity: number;
-  shinglesSize: number;
-  shinglesType: "char" | "word";
-  signatureLength: number;
-  rowsPerBand: number;
-}) => {
-  let shingleTool: ShinglingTool;
-  if (config.shinglesType === "char") {
-    shingleTool = new StringShinglingTool(
-      config.shinglesSize,
-      getCompactHasher()
-    );
-  } else {
-    shingleTool = new WordShinglingTool(
-      config.shinglesSize,
-      getCompactHasher()
-    );
-  }
-
-  return new NearDuplicatesFinder(
-    { rowsPerBand: config.rowsPerBand, minSimilarity: config.minSimilarity },
-    new SparseMatrix(),
-    new SignatureMatrix(config.signatureLength, saltGenerator),
-    shingleTool,
-    baseFilterFactory()
-  );
-};

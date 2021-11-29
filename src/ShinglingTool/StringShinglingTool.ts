@@ -7,6 +7,7 @@ export default class StringShinglingTool extends BaseShinglingTool {
     text: string,
     callback: (docId: string, shingle: Shingle) => void
   ): void {
+    text = this.filter ? this.filter.filter(text) : text;
     const items = [...text];
     let startPosition = 0;
     let endPosition = this.shingleSize;

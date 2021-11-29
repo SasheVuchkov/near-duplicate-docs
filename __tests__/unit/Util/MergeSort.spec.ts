@@ -1,4 +1,4 @@
-import MergeSort from "../../src/Util/MergeSort";
+import MergeSort from "../../../src/Util/MergeSort";
 
 describe("Testing Utils/MergeSort class", () => {
   type Data<T> = [string, T[], (left: T, right: T) => boolean, T[]];

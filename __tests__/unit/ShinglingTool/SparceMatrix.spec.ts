@@ -1,6 +1,6 @@
-import SparseMatrix from "../../src/ShinglingTool/SparseMatrix";
-import WordShinglingTool from "../../src/ShinglingTool/WordShinglingTool";
-import { Shingle } from "../../src/ShinglingTool/ShinglingTool";
+import SparseMatrix from "../../../src/ShinglingTool/SparseMatrix";
+import WordShinglingTool from "../../../src/ShinglingTool/WordShinglingTool";
+import { Shingle } from "../../../src/ShinglingTool/ShinglingTool";
 
 describe("Testig ShinglingTool/SparceMatrix class", () => {
   const text =

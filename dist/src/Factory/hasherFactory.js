@@ -9,7 +9,7 @@ const getCompactHasher = () => {
     const hasher = new jshashes_1.default.SHA256().hex;
     return (str) => {
         const hash = hasher(str);
-        return parseInt(`0x${hash.slice(0, 3)}${hash.slice(hash.length, 3)}${hash.slice(-3)}`, 16);
+        return parseInt(`0x${hash.slice(0, 2)}${hash.slice(Math.floor(hash.length / 2), Math.floor(hash.length / 2) + 3)}${hash.slice(-2)}`, 16);
     };
 };
 exports.getCompactHasher = getCompactHasher;

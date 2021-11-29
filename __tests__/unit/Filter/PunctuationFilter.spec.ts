@@ -1,4 +1,4 @@
-import PunctuationFilter from "../../src/Filter/PunctuationFilter";
+import PunctuationFilter from "../../../src/Filter/PunctuationFilter";
 
 describe("Testing PunctuationFilter class", () => {
   const filter = new PunctuationFilter();

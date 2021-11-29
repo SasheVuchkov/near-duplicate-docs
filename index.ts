@@ -1,9 +1,9 @@
 import fs from "fs";
 import path from "path";
 import readline from "readline";
-import { makeFinder } from "./src/NearDuplicatesFinder";
+import { makeDuplicatesFinder } from "./src/Factory/duplicatesFinderFactory";
 
-const auditor = makeFinder({
+const finder = makeDuplicatesFinder({
   minSimilarity: 0.01,
   shinglesSize: 5,
   shinglesType: "word",
@@ -11,11 +11,19 @@ const auditor = makeFinder({
   rowsPerBand: 5,
 });
 
+finder.on("doc_added", (candidates) => {
+  console.log(candidates);
+});
+
+finder.on("found_candidates", (candidates) => console.log(candidates));
+
+finder.on("found_duplicates", (duplicates) => console.log(duplicates));
+
 const process = async () => {
   let count = 0;
   try {
     const fileStream = fs.createReadStream(
-      path.join(__dirname, "..", "datasets", "test.ft.txt")
+      path.join(__dirname, "..", "datasets", "reviews.test.txt")
     );
 
     const rl = readline.createInterface({
@@ -29,32 +37,15 @@ const process = async () => {
       // Each line in input.txt will be successively available here as `line`.
 
       const ln = line.replace(/__label__[0-9] /gi, "");
-
-      auditor.add(`review${count}`, ln);
-
+      finder.add(`review${count}`, ln);
       count += 1;
-      //console.log(count);
-
-      if (count == 321 || count == 673) {
-        //console.log(ln, "<===>");
-      }
-
-      if (count > 1000) {
-        break;
-      }
     }
   } catch (err) {
     console.error(err);
   }
 
-  auditor.start();
-
-  auditor.on("found_candidates", (candidates) => console.log(candidates));
-  auditor.on("found_duplicates", (duplicates) => console.log(duplicates));
-
-  if (auditor.hasErrors()) {
-    console.log(auditor.getErrors());
-  }
+  const duplicates = finder.search();
+  console.log(duplicates);
 };
 
 void process();

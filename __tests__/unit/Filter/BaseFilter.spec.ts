@@ -1,7 +1,7 @@
-import HtmlTagsFilter from "../../src/Filter/HtmlTagsFilter";
-import BaseFilter from "../../src/Filter/BaseFilter";
-import PunctuationFilter from "../../src/Filter/PunctuationFilter";
-import WhitespaceFilter from "../../src/Filter/WhitespaceFilter";
+import HtmlTagsFilter from "../../../src/Filter/HtmlTagsFilter";
+import BaseFilter from "../../../src/Filter/BaseFilter";
+import PunctuationFilter from "../../../src/Filter/PunctuationFilter";
+import WhitespaceFilter from "../../../src/Filter/WhitespaceFilter";
 
 describe("Testing BaseFilter class", () => {
   test("Adding a child filter", () => {

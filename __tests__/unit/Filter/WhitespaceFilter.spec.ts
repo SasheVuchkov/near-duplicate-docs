@@ -1,4 +1,4 @@
-import WhitespaceFilter from "../../src/Filter/WhitespaceFilter";
+import WhitespaceFilter from "../../../src/Filter/WhitespaceFilter";
 
 describe("Testing WhitespaceFilter class", () => {
   const filter = new WhitespaceFilter();
