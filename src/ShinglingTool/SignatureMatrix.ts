@@ -9,6 +9,7 @@ export default class SignatureMatrix {
   protected salts: number[];
   protected sigLength: number;
   protected hasher: (str: string) => number;
+  protected saltGenerator: () => number;
   protected matrix: SparseMatrix | undefined;
   protected sortAlgo: MergeSort<[string, number]> = new MergeSort<
     [string, number]
@@ -19,7 +20,8 @@ export default class SignatureMatrix {
     ): boolean => left[1] < right[1]
   );
 
-  public constructor(sigLength: number) {
+  public constructor(sigLength: number, saltGenerator: () => number) {
+    this.saltGenerator = saltGenerator;
     this.salts = this.generateSalts(sigLength);
     this.sigLength = sigLength;
     this.hasher = getCompactHasher();
@@ -48,28 +50,29 @@ export default class SignatureMatrix {
   }
 
   protected minHash(
-    shuffledKeys: [string, number][],
+    keys: [string, number][],
     matrix: SparseMatrix,
     salt: string
   ): MatrixData {
     const localRows: MatrixData = {};
-
-    shuffledKeys?.forEach((key) => {
+    keys?.forEach((key) => {
       const payload = matrix.getPayload(key[0]);
 
-      payload?.forEach((item) => {
-        if (typeof localRows[item[1]] === "undefined") {
-          localRows[item[1]] = {};
+      if (!payload) {
+        return;
+      }
+      Object.keys(payload).forEach((id) => {
+        if (typeof localRows[id] === "undefined") {
+          localRows[id] = {};
         }
-
-        const min = localRows[item[1]][salt];
+        const min = localRows[id][salt];
 
         if (typeof min === "undefined") {
-          localRows[item[1]][salt] = key[1];
+          localRows[id][salt] = key[1];
           return;
         }
 
-        localRows[item[1]][salt] = min > key[1] ? key[1] : min;
+        localRows[id][salt] = min > key[1] ? key[1] : min;
       });
     });
 
@@ -82,7 +85,7 @@ export default class SignatureMatrix {
       const integer: number = new Number(key).valueOf();
       result.push([
         key,
-        (Number.isNaN(integer) ? this.hasher(key) : integer.valueOf()) ^ salt,
+        (Number.isNaN(integer) ? this.hasher(key) : integer) ^ salt,
       ]);
     });
     return this.sortAlgo.sort(result);
@@ -91,7 +94,8 @@ export default class SignatureMatrix {
   protected generateSalts(length: number): number[] {
     const salts: number[] = [];
     while (salts.length < length) {
-      salts.push(Math.floor(Math.random() * 99999999));
+      const salt = this.saltGenerator();
+      salts.push(salt);
     }
     return salts;
   }

@@ -12,6 +12,7 @@ const WordShinglingTool_1 = __importDefault(require("./ShinglingTool/WordShingli
 const filterFactory_1 = require("./Factory/filterFactory");
 const SignatureMatrix_1 = __importDefault(require("./ShinglingTool/SignatureMatrix"));
 const HashRegister_1 = __importDefault(require("./Util/HashRegister"));
+const SaltGenerator_1 = __importDefault(require("./Util/SaltGenerator"));
 class NearDuplicatesFinder extends events_1.EventEmitter {
     constructor(config, shinglesMatrix, signatureMatrix, shinglingTool, filter) {
         super();
@@ -121,11 +122,27 @@ class NearDuplicatesFinder extends events_1.EventEmitter {
     compareShingles(s1, s2) {
         const similar = [];
         const total = [];
-        for (const shingle of s1) {
-            s2.includes(shingle) ? similar.push(shingle) : total.push(shingle);
+        for (const tuple of s1) {
+            let min = tuple[0];
+            let max = tuple[0];
+            const s2tuples = s2.filter((t) => t[1] === tuple[1]);
+            if (s2tuples.length > 0) {
+                min = min < s2tuples[0][0] ? min : s2tuples[0][0];
+                max = max > s2tuples[0][0] ? max : s2tuples[0][0];
+                for (let i = 1; i <= min; i += 1) {
+                    similar.push(tuple[1]);
+                }
+            }
+            for (let i = 1; i <= max; i += 1) {
+                total.push(tuple[1]);
+            }
         }
-        for (const shingle of s2) {
-            !total.includes(shingle) && total.push(shingle);
+        for (const tuple of s2) {
+            if (!total.includes(tuple[1])) {
+                for (let i = 1; i <= tuple[0]; i += 1) {
+                    total.push(tuple[1]);
+                }
+            }
         }
         return total.length > 0 ? similar.length / total.length : 0;
     }
@@ -145,7 +162,7 @@ const makeFinder = (config) => {
     else {
         shingleTool = new WordShinglingTool_1.default(config.shinglesSize, (0, hasherFactory_1.getCompactHasher)());
     }
-    return new NearDuplicatesFinder({ rowsPerBand: config.rowsPerBand, minSimilarity: config.minSimilarity }, new SparseMatrix_1.default(), new SignatureMatrix_1.default(config.signatureLength), shingleTool, (0, filterFactory_1.baseFilterFactory)());
+    return new NearDuplicatesFinder({ rowsPerBand: config.rowsPerBand, minSimilarity: config.minSimilarity }, new SparseMatrix_1.default(), new SignatureMatrix_1.default(config.signatureLength, SaltGenerator_1.default), shingleTool, (0, filterFactory_1.baseFilterFactory)());
 };
 exports.makeFinder = makeFinder;
 //# sourceMappingURL=NearDuplicatesFinder.js.map

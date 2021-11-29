@@ -1,7 +1,7 @@
 import { EventEmitter } from "events";
 
 import FilterInterface from "./Filter/FilterInterface";
-import ShinglingTool from "./ShinglingTool/ShinglingTool";
+import ShinglingTool, { Shingle } from "./ShinglingTool/ShinglingTool";
 import SparseMatrix from "./ShinglingTool/SparseMatrix";
 import StringShinglingTool from "./ShinglingTool/StringShinglingTool";
 import { getCompactHasher } from "./Factory/hasherFactory";
@@ -9,6 +9,7 @@ import WordShinglingTool from "./ShinglingTool/WordShinglingTool";
 import { baseFilterFactory } from "./Factory/filterFactory";
 import SignatureMatrix from "./ShinglingTool/SignatureMatrix";
 import HashRegister from "./Util/HashRegister";
+import saltGenerator from "./Util/SaltGenerator";
 
 export type Bucket = { [hash: string]: string[] };
 export type Config = { rowsPerBand: number; minSimilarity: number };
@@ -152,7 +153,7 @@ export default class NearDuplicatesFinder extends EventEmitter {
 
   public compare(
     docIds: string[],
-    shingles: { [docId: string]: (string | number)[] }
+    shingles: { [docId: string]: [number, Shingle][] }
   ) {
     for (const current of docIds) {
       docIds.shift();
@@ -178,18 +179,35 @@ export default class NearDuplicatesFinder extends EventEmitter {
   }
 
   protected compareShingles(
-    s1: (string | number)[],
-    s2: (string | number)[]
+    s1: [number, Shingle][],
+    s2: [number, Shingle][]
   ): number {
     const similar: (number | string)[] = [];
     const total: (number | string)[] = [];
 
-    for (const shingle of s1) {
-      s2.includes(shingle) ? similar.push(shingle) : total.push(shingle);
+    for (const tuple of s1) {
+      let min = tuple[0];
+      let max = tuple[0];
+      const s2tuples = s2.filter((t) => t[1] === tuple[1]);
+      if (s2tuples.length > 0) {
+        min = min < s2tuples[0][0] ? min : s2tuples[0][0];
+        max = max > s2tuples[0][0] ? max : s2tuples[0][0];
+        for (let i = 1; i <= min; i += 1) {
+          similar.push(tuple[1]);
+        }
+      }
+
+      for (let i = 1; i <= max; i += 1) {
+        total.push(tuple[1]);
+      }
     }
 
-    for (const shingle of s2) {
-      !total.includes(shingle) && total.push(shingle);
+    for (const tuple of s2) {
+      if (!total.includes(tuple[1])) {
+        for (let i = 1; i <= tuple[0]; i += 1) {
+          total.push(tuple[1]);
+        }
+      }
     }
 
     return total.length > 0 ? similar.length / total.length : 0;
@@ -227,7 +245,7 @@ export const makeFinder = (config: {
   return new NearDuplicatesFinder(
     { rowsPerBand: config.rowsPerBand, minSimilarity: config.minSimilarity },
     new SparseMatrix(),
-    new SignatureMatrix(config.signatureLength),
+    new SignatureMatrix(config.signatureLength, saltGenerator),
     shingleTool,
     baseFilterFactory()
   );

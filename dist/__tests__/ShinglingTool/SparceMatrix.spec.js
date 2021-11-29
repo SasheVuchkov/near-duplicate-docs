@@ -30,10 +30,10 @@ describe("Testig ShinglingTool/SparceMatrix class", () => {
         });
         const data = matrix.getDocShingles(["randomId", "undefined"]);
         const rows = matrix.getRows();
-        expect(data.randomId.length).toEqual(expected.length);
+        expect(Object.keys(data.randomId).length).toEqual(expected.length);
         expected.forEach((item) => {
-            expect(data.randomId.includes(item[1])).toEqual(true);
-            expect(Object.keys(rows).includes(item[1])).toEqual(true);
+            expect(data.randomId.filter((tuple) => tuple[1] === item[1]).length).not.toEqual(0);
+            expect(Object.keys(rows).includes(item[1].toString())).toEqual(true);
         });
     });
     test("Test case: Testing the addItem method", () => {
@@ -43,15 +43,14 @@ describe("Testig ShinglingTool/SparceMatrix class", () => {
             matrix.addItem(shingle.toString(), docId);
         });
         const shingles = matrix.getShingles();
-        expect(shingles.length).toEqual(expected.length);
         expected.forEach((item) => {
-            expect(shingles.includes(item[1])).toEqual(true);
+            expect(shingles.includes(item[1].toString())).toEqual(true);
         });
         expected.forEach((item) => {
-            const shingle = matrix.getPayload(item[1]);
+            const shingle = matrix.getPayload(item[1].toString());
             expect(shingle).not.toEqual("undefined");
             if (shingle) {
-                expect(shingle[0][0]).toEqual(item[0]);
+                expect(shingle.randomId).toEqual(item[0]);
             }
         });
     });

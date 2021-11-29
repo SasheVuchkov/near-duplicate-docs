@@ -1,7 +1,7 @@
 /// <reference types="node" />
 import { EventEmitter } from "events";
 import FilterInterface from "./Filter/FilterInterface";
-import ShinglingTool from "./ShinglingTool/ShinglingTool";
+import ShinglingTool, { Shingle } from "./ShinglingTool/ShinglingTool";
 import SparseMatrix from "./ShinglingTool/SparseMatrix";
 import SignatureMatrix from "./ShinglingTool/SignatureMatrix";
 import HashRegister from "./Util/HashRegister";
@@ -33,9 +33,9 @@ export default class NearDuplicatesFinder extends EventEmitter {
     findDuplicates(candidates: string[][]): void;
     compress(bucket: Bucket): void;
     compare(docIds: string[], shingles: {
-        [docId: string]: (string | number)[];
+        [docId: string]: [number, Shingle][];
     }): void;
-    protected compareShingles(s1: (string | number)[], s2: (string | number)[]): number;
+    protected compareShingles(s1: [number, Shingle][], s2: [number, Shingle][]): number;
     hasErrors(): boolean;
     getErrors(): any[];
 }

@@ -14,14 +14,14 @@ class SparseMatrix {
         return Object.keys(this.rows);
     }
     getDocShingles(docIds) {
-        var _a;
         const shingles = {};
         for (const shingle in this.rows) {
-            for (const docId of docIds) {
-                const docs = this.rows[shingle].filter((item) => docId === item[1]);
-                if (docs.length > 0) {
-                    shingles[docId] = (_a = shingles[docId]) !== null && _a !== void 0 ? _a : [];
-                    shingles[docId].push(shingle);
+            for (const id of docIds) {
+                if (!shingles[id]) {
+                    shingles[id] = [];
+                }
+                if (this.rows[shingle][id]) {
+                    shingles[id].push([this.rows[shingle][id], shingle]);
                 }
             }
         }
@@ -29,12 +29,13 @@ class SparseMatrix {
     }
     addItem(key, payload) {
         if (!this.rows[key]) {
-            this.rows[key] = [[1, payload]];
+            this.rows[key] = {};
+        }
+        if (!this.rows[key][payload]) {
+            this.rows[key][payload] = 1;
             return this;
         }
-        this.rows[key].forEach((payload) => {
-            payload[0] += 1;
-        });
+        this.rows[key][payload] += 1;
         return this;
     }
 }
