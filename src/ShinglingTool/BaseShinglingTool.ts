@@ -1,19 +1,12 @@
 import ShinglingTool, { Shingle } from "./ShinglingTool";
-import FilterInterface from "../Filter/FilterInterface";
 
 export abstract class BaseShinglingTool implements ShinglingTool {
   protected shingleSize: number;
   protected hasher: (str: string) => Shingle;
-  protected filter?: FilterInterface;
 
-  public constructor(
-    shingleSize: number,
-    hasher: (str: string) => Shingle,
-    filter?: FilterInterface
-  ) {
+  public constructor(shingleSize: number, hasher: (str: string) => Shingle) {
     this.shingleSize = shingleSize;
     this.hasher = hasher;
-    this.filter = filter;
   }
 
   public abstract process(

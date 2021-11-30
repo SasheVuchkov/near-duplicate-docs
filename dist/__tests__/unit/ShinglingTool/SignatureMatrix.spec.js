@@ -10,12 +10,12 @@ describe("Testing ShinglingTool/BaseSignatureMatrix class", () => {
     let generatorCalled = 0;
     const saltGeneratorMock = () => [555, 666, 777, 888][generatorCalled++];
     test("Test case: The method getSignatureLength return the right value", () => {
-        const matrix = new BaseSignatureMatrix_1.default(100, saltGeneratorMock, (0, sortAlgoFactory_1.makeMergeSortAlgo)());
+        const matrix = new BaseSignatureMatrix_1.default({ sigLength: 100 }, saltGeneratorMock, (0, sortAlgoFactory_1.makeMergeSortAlgo)());
         expect(matrix.getSignatureLength()).toEqual(100);
     });
     test("Test case: The method getRows return the right values", () => {
         generatorCalled = 0;
-        const matrix = new BaseSignatureMatrix_1.default(3, saltGeneratorMock, (0, sortAlgoFactory_1.makeMergeSortAlgo)());
+        const matrix = new BaseSignatureMatrix_1.default({ sigLength: 3 }, saltGeneratorMock, (0, sortAlgoFactory_1.makeMergeSortAlgo)());
         const shinglingMatrix = new BaseSparseMatrix_1.default();
         shinglingMatrix.addItem("Like Die Hard", "document1");
         shinglingMatrix.addItem("but with sloths", "document1");

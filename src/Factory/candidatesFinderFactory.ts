@@ -1,7 +1,6 @@
 import ShinglingTool from "../ShinglingTool/ShinglingTool";
 import StringShinglingTool from "../ShinglingTool/StringShinglingTool";
 import { getCompactHasher } from "./hasherFactory";
-import { baseFilterFactory } from "./filterFactory";
 import WordShinglingTool from "../ShinglingTool/WordShinglingTool";
 import BaseSparseMatrix from "../ShinglingTool/BaseSparseMatrix";
 import BaseSignatureMatrix from "../ShinglingTool/BaseSignatureMatrix";
@@ -19,14 +18,12 @@ export const makeCandidatesFinder = (config: {
   if (config.shinglesType === "char") {
     shingleTool = new StringShinglingTool(
       config.shinglesSize,
-      getCompactHasher(),
-      baseFilterFactory()
+      getCompactHasher()
     );
   } else {
     shingleTool = new WordShinglingTool(
       config.shinglesSize,
-      getCompactHasher(),
-      baseFilterFactory()
+      getCompactHasher()
     );
   }
 
