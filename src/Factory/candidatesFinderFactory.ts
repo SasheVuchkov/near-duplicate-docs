@@ -7,7 +7,6 @@ import BaseSparseMatrix from "../ShinglingTool/BaseSparseMatrix";
 import BaseSignatureMatrix from "../ShinglingTool/BaseSignatureMatrix";
 import saltGenerator from "../Util/SaltGenerator";
 import BaseCandidatesFinder from "../BaseCandidatesFinder";
-import HashRegister from "../Util/HashRegister";
 import { makeMergeSortAlgo } from "./sortAlgoFactory";
 
 export const makeCandidatesFinder = (config: {
@@ -35,7 +34,7 @@ export const makeCandidatesFinder = (config: {
     { rowsPerBand: config.rowsPerBand },
     new BaseSparseMatrix(),
     new BaseSignatureMatrix(
-      config.signatureLength,
+      { sigLength: config.signatureLength },
       saltGenerator,
       makeMergeSortAlgo()
     ),

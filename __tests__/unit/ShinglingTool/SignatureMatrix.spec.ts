@@ -9,7 +9,7 @@ describe("Testing ShinglingTool/BaseSignatureMatrix class", () => {
 
   test("Test case: The method getSignatureLength return the right value", () => {
     const matrix = new BaseSignatureMatrix(
-      100,
+      { sigLength: 100 },
       saltGeneratorMock,
       makeMergeSortAlgo()
     );
@@ -20,7 +20,7 @@ describe("Testing ShinglingTool/BaseSignatureMatrix class", () => {
     generatorCalled = 0;
 
     const matrix = new BaseSignatureMatrix(
-      3,
+      { sigLength: 3 },
       saltGeneratorMock,
       makeMergeSortAlgo()
     );

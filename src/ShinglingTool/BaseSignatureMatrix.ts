@@ -4,30 +4,34 @@ import SignatureMatrix, { MatrixData } from "./SignatureMatrix";
 import SortAlgo from "../Util/SortAlgo";
 import FromSparseMatrix from "./FromSparseMatrix";
 
+export type Config = {
+  sigLength: number;
+};
+
 export default class BaseSignatureMatrix
   implements SignatureMatrix, FromSparseMatrix<SignatureMatrix>
 {
   protected salts: number[];
-  protected sigLength: number;
+  protected config: Config;
   protected hasher: (str: string) => number;
   protected saltGenerator: () => number;
   protected matrix: BaseSparseMatrix | undefined;
   protected sortAlgo: SortAlgo<[string, number]>;
 
   public constructor(
-    sigLength: number,
+    config: Config,
     saltGenerator: () => number,
     sortAlgo: SortAlgo<[string, number]>
   ) {
+    this.config = config;
     this.saltGenerator = saltGenerator;
-    this.salts = this.generateSalts(sigLength);
-    this.sigLength = sigLength;
+    this.salts = this.generateSalts(this.config.sigLength);
     this.hasher = getCompactHasher();
     this.sortAlgo = sortAlgo;
   }
 
   public getSignatureLength(): number {
-    return this.sigLength;
+    return this.config.sigLength;
   }
 
   public *getRows(): Generator<MatrixData> {

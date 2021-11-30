@@ -2,15 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const hasherFactory_1 = require("../Factory/hasherFactory");
 class BaseSignatureMatrix {
-    constructor(sigLength, saltGenerator, sortAlgo) {
+    constructor(config, saltGenerator, sortAlgo) {
+        this.config = config;
         this.saltGenerator = saltGenerator;
-        this.salts = this.generateSalts(sigLength);
-        this.sigLength = sigLength;
+        this.salts = this.generateSalts(this.config.sigLength);
         this.hasher = (0, hasherFactory_1.getCompactHasher)();
         this.sortAlgo = sortAlgo;
     }
     getSignatureLength() {
-        return this.sigLength;
+        return this.config.sigLength;
     }
     *getRows() {
         if (!this.matrix) {

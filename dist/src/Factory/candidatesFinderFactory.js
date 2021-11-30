@@ -21,7 +21,7 @@ const makeCandidatesFinder = (config) => {
     else {
         shingleTool = new WordShinglingTool_1.default(config.shinglesSize, (0, hasherFactory_1.getCompactHasher)(), (0, filterFactory_1.baseFilterFactory)());
     }
-    return new BaseCandidatesFinder_1.default({ rowsPerBand: config.rowsPerBand }, new BaseSparseMatrix_1.default(), new BaseSignatureMatrix_1.default(config.signatureLength, SaltGenerator_1.default, (0, sortAlgoFactory_1.makeMergeSortAlgo)()), shingleTool);
+    return new BaseCandidatesFinder_1.default({ rowsPerBand: config.rowsPerBand }, new BaseSparseMatrix_1.default(), new BaseSignatureMatrix_1.default({ sigLength: config.signatureLength }, SaltGenerator_1.default, (0, sortAlgoFactory_1.makeMergeSortAlgo)()), shingleTool);
 };
 exports.makeCandidatesFinder = makeCandidatesFinder;
 //# sourceMappingURL=candidatesFinderFactory.js.map
