@@ -1,6 +1,6 @@
 {
   "name": "near-duplicate-docs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Simple library for finding duplicate and near-duplicate text documents in massive sets/libraries/databases",
   "main": "dist/index.js",
   "author": "Sashe Vuchkov <sashe@buahlbu.com>",
