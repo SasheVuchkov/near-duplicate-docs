@@ -34,7 +34,7 @@ finder.on("doc_added", (candidates) => {
     console.log(candidates);
 });
 finder.on("found_candidates", (candidates) => console.log(candidates));
-finder.on("found_duplicates", (duplicates) => console.log(duplicates));
+finder.on("score", (duplicates) => console.log(duplicates));
 const process = () => __awaiter(void 0, void 0, void 0, function* () {
     var e_1, _a;
     let count = 0;
@@ -53,6 +53,9 @@ const process = () => __awaiter(void 0, void 0, void 0, function* () {
                 const ln = line.replace(/__label__[0-9] /gi, "");
                 finder.add(`review${count}`, ln);
                 count += 1;
+                if (count > 200) {
+                    //break;
+                }
             }
         }
         catch (e_1_1) { e_1 = { error: e_1_1 }; }

@@ -16,7 +16,7 @@ class HashRegister {
         this.isRegistered = (str) => {
             return this.hashes.includes(this.algo(str));
         };
-        this.getHash = (str) => {
+        this.get = (str) => {
             return this.hashes.filter((hash) => this.algo(str) !== hash).shift();
         };
         this.count = () => this.hashes.length;

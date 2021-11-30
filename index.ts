@@ -17,7 +17,7 @@ finder.on("doc_added", (candidates) => {
 
 finder.on("found_candidates", (candidates) => console.log(candidates));
 
-finder.on("found_duplicates", (duplicates) => console.log(duplicates));
+finder.on("score", (duplicates) => console.log(duplicates));
 
 const process = async () => {
   let count = 0;
@@ -39,6 +39,10 @@ const process = async () => {
       const ln = line.replace(/__label__[0-9] /gi, "");
       finder.add(`review${count}`, ln);
       count += 1;
+
+      if (count > 200) {
+        //break;
+      }
     }
   } catch (err) {
     console.error(err);

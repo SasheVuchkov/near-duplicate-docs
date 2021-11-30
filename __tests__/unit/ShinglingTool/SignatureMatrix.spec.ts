@@ -1,26 +1,35 @@
-import SignatureMatrix from "../../../src/ShinglingTool/SignatureMatrix";
-import SparseMatrix from "../../../src/ShinglingTool/SparseMatrix";
+import BaseSignatureMatrix from "../../../src/ShinglingTool/BaseSignatureMatrix";
+import BaseSparseMatrix from "../../../src/ShinglingTool/BaseSparseMatrix";
+import { makeMergeSortAlgo } from "../../../src/Factory/sortAlgoFactory";
 
-describe("Testing ShinglingTool/SignatureMatrix class", () => {
+describe("Testing ShinglingTool/BaseSignatureMatrix class", () => {
   let generatorCalled = 0;
   const saltGeneratorMock = (): number =>
     [555, 666, 777, 888][generatorCalled++];
 
   test("Test case: The method getSignatureLength return the right value", () => {
-    const matrix = new SignatureMatrix(100, saltGeneratorMock);
+    const matrix = new BaseSignatureMatrix(
+      100,
+      saltGeneratorMock,
+      makeMergeSortAlgo()
+    );
     expect(matrix.getSignatureLength()).toEqual(100);
   });
 
   test("Test case: The method getRows return the right values", () => {
     generatorCalled = 0;
 
-    const matrix = new SignatureMatrix(3, saltGeneratorMock);
-    const shinglingMatrix = new SparseMatrix();
+    const matrix = new BaseSignatureMatrix(
+      3,
+      saltGeneratorMock,
+      makeMergeSortAlgo()
+    );
+    const shinglingMatrix = new BaseSparseMatrix();
     shinglingMatrix.addItem("Like Die Hard", "document1");
     shinglingMatrix.addItem("but with sloths", "document1");
     shinglingMatrix.addItem("and giant ladybugs", "document1");
 
-    const noMatrixResult = matrix.getSignatureRows();
+    const noMatrixResult = matrix.getRows();
     expect(noMatrixResult.next()).toEqual({ done: true, value: undefined });
 
     matrix.fromSparseMatrix(shinglingMatrix);
@@ -35,7 +44,7 @@ describe("Testing ShinglingTool/SignatureMatrix class", () => {
 
     let count = 0;
 
-    const rows = matrix.getSignatureRows();
+    const rows = matrix.getRows();
     for (const row of rows) {
       count += 1;
       expect(row).toEqual(expectedRows[count]);

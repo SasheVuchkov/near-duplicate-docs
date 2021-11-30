@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const SparseMatrix_1 = __importDefault(require("../../../src/ShinglingTool/SparseMatrix"));
+const BaseSparseMatrix_1 = __importDefault(require("../../../src/ShinglingTool/BaseSparseMatrix"));
 const WordShinglingTool_1 = __importDefault(require("../../../src/ShinglingTool/WordShinglingTool"));
 describe("Testig ShinglingTool/SparceMatrix class", () => {
     const text = "Like Game of Thrones, but in a bathtub, no - Like Game of Thrones, but on a bicycle.";
@@ -24,7 +24,7 @@ describe("Testig ShinglingTool/SparceMatrix class", () => {
     ];
     test("Test case: Testing that the matrix returns the right shingles per document", () => {
         const tool = new WordShinglingTool_1.default(3, (str) => str);
-        const matrix = new SparseMatrix_1.default();
+        const matrix = new BaseSparseMatrix_1.default();
         tool.process("randomId", text, (docId, shingle) => {
             matrix.addItem(shingle.toString(), docId);
         });
@@ -38,7 +38,7 @@ describe("Testig ShinglingTool/SparceMatrix class", () => {
     });
     test("Test case: Testing the addItem method", () => {
         const tool = new WordShinglingTool_1.default(3, (str) => str);
-        const matrix = new SparseMatrix_1.default();
+        const matrix = new BaseSparseMatrix_1.default();
         tool.process("randomId", text, (docId, shingle) => {
             matrix.addItem(shingle.toString(), docId);
         });

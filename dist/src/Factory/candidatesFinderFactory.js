@@ -8,10 +8,11 @@ const StringShinglingTool_1 = __importDefault(require("../ShinglingTool/StringSh
 const hasherFactory_1 = require("./hasherFactory");
 const filterFactory_1 = require("./filterFactory");
 const WordShinglingTool_1 = __importDefault(require("../ShinglingTool/WordShinglingTool"));
-const SparseMatrix_1 = __importDefault(require("../ShinglingTool/SparseMatrix"));
-const SignatureMatrix_1 = __importDefault(require("../ShinglingTool/SignatureMatrix"));
+const BaseSparseMatrix_1 = __importDefault(require("../ShinglingTool/BaseSparseMatrix"));
+const BaseSignatureMatrix_1 = __importDefault(require("../ShinglingTool/BaseSignatureMatrix"));
 const SaltGenerator_1 = __importDefault(require("../Util/SaltGenerator"));
-const CandidateDuplicatesFinder_1 = __importDefault(require("../CandidateDuplicatesFinder"));
+const BaseCandidatesFinder_1 = __importDefault(require("../BaseCandidatesFinder"));
+const sortAlgoFactory_1 = require("./sortAlgoFactory");
 const makeCandidatesFinder = (config) => {
     let shingleTool;
     if (config.shinglesType === "char") {
@@ -20,7 +21,7 @@ const makeCandidatesFinder = (config) => {
     else {
         shingleTool = new WordShinglingTool_1.default(config.shinglesSize, (0, hasherFactory_1.getCompactHasher)(), (0, filterFactory_1.baseFilterFactory)());
     }
-    return new CandidateDuplicatesFinder_1.default({ rowsPerBand: config.rowsPerBand }, new SparseMatrix_1.default(), new SignatureMatrix_1.default(config.signatureLength, SaltGenerator_1.default), shingleTool);
+    return new BaseCandidatesFinder_1.default({ rowsPerBand: config.rowsPerBand }, new BaseSparseMatrix_1.default(), new BaseSignatureMatrix_1.default(config.signatureLength, SaltGenerator_1.default, (0, sortAlgoFactory_1.makeMergeSortAlgo)()), shingleTool);
 };
 exports.makeCandidatesFinder = makeCandidatesFinder;
 //# sourceMappingURL=candidatesFinderFactory.js.map

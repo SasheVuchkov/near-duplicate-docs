@@ -45,8 +45,8 @@ describe("Testing Utils/HashRegister class", () => {
     (algo, str, hashLength, expected) => {
       const register = makeHashRegister(algo);
       register.check(str);
-      expect(register.getHash("str")?.length).toEqual(hashLength);
-      expect(register.getHash("str")).toEqual(expected);
+      expect(register.get("str")?.length).toEqual(hashLength);
+      expect(register.get("str")).toEqual(expected);
       expect(register.count()).toEqual(1);
     }
   );

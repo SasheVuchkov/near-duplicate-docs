@@ -1,4 +1,5 @@
-export default class MergeSort<T> {
+import SortAlgo from "./SortAlgo";
+export default class MergeSort<T> implements SortAlgo<T> {
     protected callback: (left: T, right: T) => boolean;
     constructor(callback: (left: T, right: T) => boolean);
     sort(data: T[]): T[];

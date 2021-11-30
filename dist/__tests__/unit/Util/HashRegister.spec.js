@@ -55,8 +55,8 @@ describe("Testing Utils/HashRegister class", () => {
         var _a;
         const register = (0, HashRegister_1.makeHashRegister)(algo);
         register.check(str);
-        expect((_a = register.getHash("str")) === null || _a === void 0 ? void 0 : _a.length).toEqual(hashLength);
-        expect(register.getHash("str")).toEqual(expected);
+        expect((_a = register.get("str")) === null || _a === void 0 ? void 0 : _a.length).toEqual(hashLength);
+        expect(register.get("str")).toEqual(expected);
         expect(register.count()).toEqual(1);
     });
 });

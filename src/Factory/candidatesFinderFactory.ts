@@ -3,10 +3,12 @@ import StringShinglingTool from "../ShinglingTool/StringShinglingTool";
 import { getCompactHasher } from "./hasherFactory";
 import { baseFilterFactory } from "./filterFactory";
 import WordShinglingTool from "../ShinglingTool/WordShinglingTool";
-import SparseMatrix from "../ShinglingTool/SparseMatrix";
-import SignatureMatrix from "../ShinglingTool/SignatureMatrix";
+import BaseSparseMatrix from "../ShinglingTool/BaseSparseMatrix";
+import BaseSignatureMatrix from "../ShinglingTool/BaseSignatureMatrix";
 import saltGenerator from "../Util/SaltGenerator";
-import CandidateDuplicatesFinder from "../CandidateDuplicatesFinder";
+import BaseCandidatesFinder from "../BaseCandidatesFinder";
+import HashRegister from "../Util/HashRegister";
+import { makeMergeSortAlgo } from "./sortAlgoFactory";
 
 export const makeCandidatesFinder = (config: {
   shinglesSize: number;
@@ -29,10 +31,14 @@ export const makeCandidatesFinder = (config: {
     );
   }
 
-  return new CandidateDuplicatesFinder(
+  return new BaseCandidatesFinder(
     { rowsPerBand: config.rowsPerBand },
-    new SparseMatrix(),
-    new SignatureMatrix(config.signatureLength, saltGenerator),
+    new BaseSparseMatrix(),
+    new BaseSignatureMatrix(
+      config.signatureLength,
+      saltGenerator,
+      makeMergeSortAlgo()
+    ),
     shingleTool
   );
 };

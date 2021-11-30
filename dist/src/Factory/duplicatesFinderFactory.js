@@ -6,9 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.makeDuplicatesFinder = void 0;
 const candidatesFinderFactory_1 = require("./candidatesFinderFactory");
 const NearDuplicatesFinder_1 = __importDefault(require("../NearDuplicatesFinder"));
+const JaccardSimilarityCalculator_1 = __importDefault(require("../SimilarityCalculator/JaccardSimilarityCalculator"));
 const makeDuplicatesFinder = (config) => {
     const candidatesFinder = (0, candidatesFinderFactory_1.makeCandidatesFinder)(Object.assign({}, config));
-    return new NearDuplicatesFinder_1.default({ minSimilarity: config.minSimilarity }, candidatesFinder);
+    return new NearDuplicatesFinder_1.default({ minSimilarity: config.minSimilarity }, candidatesFinder, new JaccardSimilarityCalculator_1.default());
 };
 exports.makeDuplicatesFinder = makeDuplicatesFinder;
 //# sourceMappingURL=duplicatesFinderFactory.js.map

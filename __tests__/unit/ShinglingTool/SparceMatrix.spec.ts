@@ -1,4 +1,4 @@
-import SparseMatrix from "../../../src/ShinglingTool/SparseMatrix";
+import BaseSparseMatrix from "../../../src/ShinglingTool/BaseSparseMatrix";
 import WordShinglingTool from "../../../src/ShinglingTool/WordShinglingTool";
 import { Shingle } from "../../../src/ShinglingTool/ShinglingTool";
 
@@ -23,7 +23,7 @@ describe("Testig ShinglingTool/SparceMatrix class", () => {
 
   test("Test case: Testing that the matrix returns the right shingles per document", () => {
     const tool = new WordShinglingTool(3, (str: string): Shingle => str);
-    const matrix = new SparseMatrix();
+    const matrix = new BaseSparseMatrix();
     tool.process("randomId", text, (docId: string, shingle: Shingle) => {
       matrix.addItem(shingle.toString(), docId);
     });
@@ -41,7 +41,7 @@ describe("Testig ShinglingTool/SparceMatrix class", () => {
 
   test("Test case: Testing the addItem method", () => {
     const tool = new WordShinglingTool(3, (str: string): Shingle => str);
-    const matrix = new SparseMatrix();
+    const matrix = new BaseSparseMatrix();
     tool.process("randomId", text, (docId: string, shingle: Shingle) => {
       matrix.addItem(shingle.toString(), docId);
     });

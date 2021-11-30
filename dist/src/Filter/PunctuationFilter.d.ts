@@ -1,4 +1,5 @@
-export default class PunctuationFilter {
+import BaseFilter from "./BaseFilter";
+export default class PunctuationFilter extends BaseFilter {
     protected punctuationRegex: RegExp;
     filter: (text: string) => string;
 }

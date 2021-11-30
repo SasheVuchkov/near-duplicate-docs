@@ -1,6 +1,7 @@
 import { getMd5, getSha256 } from "../Factory/hasherFactory";
+import ValueRegister from "./ValueRegister";
 
-export default class HashRegister {
+export default class HashRegister implements ValueRegister<string, string> {
   protected hashes: string[] = [];
   protected algo: (str: string) => string;
 
@@ -23,7 +24,7 @@ export default class HashRegister {
     return this.hashes.includes(this.algo(str));
   };
 
-  public getHash = (str: string): string | undefined => {
+  public get = (str: string): string | undefined => {
     return this.hashes.filter((hash) => this.algo(str) !== hash).shift();
   };
   public count = (): number => this.hashes.length;
