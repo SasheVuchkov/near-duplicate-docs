@@ -3,16 +3,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class JaccardSimilarityCalculator {
     calculate(docIds, shingles) {
         const scores = {};
+        const index = {};
         for (const current of docIds) {
             const currentShingles = shingles[current];
             for (const doc of docIds) {
                 if (current === doc) {
                     continue;
                 }
-                const jaccard = this.compare(currentShingles, shingles[doc]);
+                if (typeof index[doc] === "undefined") {
+                    index[doc] = [];
+                }
+                if (index[current] && index[current].includes(doc)) {
+                    continue;
+                }
                 if (typeof scores[current] === "undefined") {
                     scores[current] = [];
                 }
+                index[doc].push(current);
+                const jaccard = this.compare(currentShingles, shingles[doc]);
                 scores[current].push([jaccard, doc]);
             }
         }

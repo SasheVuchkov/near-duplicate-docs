@@ -13,7 +13,3 @@ export const getCompactHasher = (): ((str: string) => number) => {
     );
   };
 };
-
-export const getSha256 = () =>
-  new Hashes.SHA256().hex as (str: string) => string;
-export const getMd5 = () => new Hashes.MD5().hex as (str: string) => string;

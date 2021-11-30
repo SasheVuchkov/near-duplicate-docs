@@ -1,7 +1,7 @@
 {
-  "name": "sv-near-duplicate-docs",
+  "name": "near-duplicate-docs",
   "version": "1.0.0",
-  "description": "Simple library for finding duplicate text documents",
+  "description": "Simple library for finding duplicate and near-duplicate text documents in massive sets/libraries/databases",
   "main": "dist/index.js",
   "author": "Sashe Vuchkov <sashevuchkov@gmail.com>",
   "license": "MIT",
@@ -23,7 +23,8 @@
   "scripts": {
     "start": "tsc && node dist/index.js",
     "build": "tsc",
-    "test": "tsc && jest",
+    "test": "tsc && jest --testPathPattern=.spec.",
+    "test-all": "tsc && jest --testTimeout=10000",
     "test-coverage": "tsc && jest --coverage",
     "watch:build": "tsc --watch",
     "lint": "eslint . --cache --ext .ts",
@@ -65,6 +66,6 @@
   },
   "pre-commit": [
     "lint",
-    "test"
+    "test-all"
   ]
 }

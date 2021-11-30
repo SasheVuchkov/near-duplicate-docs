@@ -18,24 +18,25 @@ class CandidatesBucket {
     }
     compress() {
         const data = [];
-        for (const hash in this.data) {
-            if (this.data[hash].length < 2) {
+        const copy = Object.assign({}, this.data);
+        for (const hash in copy) {
+            if (copy[hash].length < 2) {
                 continue;
             }
-            const candidates = this.checkIndex([...this.data[hash]]);
+            const candidates = this.checkIndex([...this.data[hash]], copy);
             data.push(candidates);
         }
         return data;
     }
-    checkIndex(data) {
+    checkIndex(data, copy) {
         for (const docId of data) {
             if (this.index[docId].length > 1) {
                 for (const indexedHash of this.index[docId]) {
-                    if (!this.data[indexedHash]) {
+                    if (!copy[indexedHash]) {
                         continue;
                     }
-                    data = [...data, ...this.data[indexedHash]].filter((item, index, arr) => index === arr.indexOf(item));
-                    delete this.data[indexedHash];
+                    data = [...data, ...copy[indexedHash]].filter((item, index, arr) => index === arr.indexOf(item));
+                    delete copy[indexedHash];
                 }
             }
         }

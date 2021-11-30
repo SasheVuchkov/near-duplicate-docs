@@ -7,7 +7,9 @@ export default class CandidatesBucket {
     };
     add(hash: string, doc: string): CandidatesBucket;
     compress(): string[][];
-    protected checkIndex(data: string[]): string[];
+    protected checkIndex(data: string[], copy: {
+        [hash: string]: string[];
+    }): string[];
     getData(): {
         [hash: string]: string[];
     };

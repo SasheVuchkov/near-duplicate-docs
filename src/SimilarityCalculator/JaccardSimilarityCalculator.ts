@@ -9,6 +9,7 @@ export default class JaccardSimilarityCalculator
     shingles: { [docId: string]: [number, Shingle][] }
   ): Scores {
     const scores: Scores = {};
+    const index: { [docId: string]: string[] } = {};
 
     for (const current of docIds) {
       const currentShingles = shingles[current];
@@ -18,11 +19,21 @@ export default class JaccardSimilarityCalculator
           continue;
         }
 
-        const jaccard = this.compare(currentShingles, shingles[doc]);
+        if (typeof index[doc] === "undefined") {
+          index[doc] = [];
+        }
+
+        if (index[current] && index[current].includes(doc)) {
+          continue;
+        }
 
         if (typeof scores[current] === "undefined") {
           scores[current] = [];
         }
+
+        index[doc].push(current);
+
+        const jaccard = this.compare(currentShingles, shingles[doc]);
         scores[current].push([jaccard, doc]);
       }
     }

@@ -24,25 +24,17 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const readline_1 = __importDefault(require("readline"));
 describe("Testing NearDuplicateFinder class", () => {
-    test("Test case: It found all near duplicate docs using word shingles", () => __awaiter(void 0, void 0, void 0, function* () {
+    test("Test case: It found near duplicate docs using word shingles", () => __awaiter(void 0, void 0, void 0, function* () {
         var e_1, _a;
         const expected = {
-            review9: [[0.8582677165354331, "review81"]],
-            review81: [[0.8582677165354331, "review9"]],
             review5: [
                 [1, "review6"],
                 [0.926829268292683, "review136"],
             ],
-            review6: [
-                [1, "review5"],
-                [0.926829268292683, "review136"],
-            ],
-            review136: [
-                [0.926829268292683, "review5"],
-                [0.926829268292683, "review6"],
-            ],
+            review6: [[0.926829268292683, "review136"]],
+            review81: [[0.8582677165354331, "review9"]],
         };
-        const finder = (0, duplicatesFinderFactory_1.makeDuplicatesFinder)({
+        const finder = (0, duplicatesFinderFactory_1.makeDuplicatesFinderWithMocks)({
             minSimilarity: 0.01,
             shinglesSize: 5,
             shinglesType: "word",
@@ -82,18 +74,10 @@ describe("Testing NearDuplicateFinder class", () => {
                 [1, "review6"],
                 [0.9430284857571214, "review136"],
             ],
-            review6: [
-                [1, "review5"],
-                [0.9430284857571214, "review136"],
-            ],
-            review136: [
-                [0.9430284857571214, "review5"],
-                [0.9430284857571214, "review6"],
-            ],
-            review81: [[0.8916129032258064, "review9"]],
+            review6: [[0.9430284857571214, "review136"]],
             review9: [[0.8916129032258064, "review81"]],
         };
-        const finder = (0, duplicatesFinderFactory_1.makeDuplicatesFinder)({
+        const finder = (0, duplicatesFinderFactory_1.makeDuplicatesFinderWithMocks)({
             minSimilarity: 0.01,
             shinglesSize: 5,
             shinglesType: "char",
@@ -127,4 +111,4 @@ describe("Testing NearDuplicateFinder class", () => {
         expect(duplicates).toEqual(expected);
     }));
 });
-//# sourceMappingURL=NearDuplicatesFinder.spec.js.map
+//# sourceMappingURL=NearDuplicatesFinder.func.js.map

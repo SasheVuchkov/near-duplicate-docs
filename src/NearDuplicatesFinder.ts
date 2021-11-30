@@ -23,10 +23,6 @@ export default class NearDuplicatesFinder extends EventEmitter {
     this.candidatesFinder = candidatesFinder;
     this.similarityCalculator = similarityCalculator;
 
-    this.candidatesFinder.on("found_candidates", (candidates) => {
-      this.emit("found_candidates", candidates);
-    });
-
     this.candidatesFinder.on("search", () => {
       this.emit("candidates_search");
     });

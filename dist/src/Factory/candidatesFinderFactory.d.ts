@@ -5,3 +5,9 @@ export declare const makeCandidatesFinder: (config: {
     signatureLength: number;
     rowsPerBand: number;
 }) => BaseCandidatesFinder;
+export declare const makeCandidatesFinderWithMocks: (config: {
+    shinglesSize: number;
+    shinglesType: "char" | "word";
+    signatureLength: number;
+    rowsPerBand: number;
+}) => BaseCandidatesFinder;
