@@ -127,4 +127,4 @@ describe("Testing NearDuplicateFinder class", () => {
         expect(duplicates).toEqual(expected);
     }));
 });
-//# sourceMappingURL=NearDuplicatesFinder.spec.js.map
+//# sourceMappingURL=BaseNearDuplicatesFinder.spec.js.map

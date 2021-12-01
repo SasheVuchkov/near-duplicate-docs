@@ -31,7 +31,7 @@ yarn add near-duplicate-docs --save
 
 ### How to use it
 
-The easiest way to use the library is by requiring/importing the makeDuplicatesFinder factory callback and using it to create an instance of NearDuplicatesFinder class.
+The easiest way to use the library is by requiring/importing the makeDuplicatesFinder factory callback and using it to create an instance of BaseNearDuplicatesFinder class.
 
 ```js
 const {makeDuplicatesFinder} = require('near-duplicate-docs');
@@ -44,10 +44,10 @@ const finder = makeDuplicatesFinder({
   rowsPerBand: 5,
 });
 
-finder.addItem(document1.id, document1.text);
-finder.addItem(document2.id, document2.text);
-finder.addItem(document3.id, document3.text);
-finder.addItem(documentN.id, documentN.text);
+finder.add(document1.id, document1.text);
+finder.add(document2.id, document2.text);
+finder.add(document3.id, document3.text);
+finder.add(documentN.id, documentN.text);
 
 const duplicates = finder.search();
 
@@ -60,9 +60,38 @@ console.log(duplicates);
   documentN: [[0.76, "document2"], [0.80, "document3"]
 }
 ```
+
+```js
+const {makeDuplicatesFinder} = require('near-duplicate-docs');
+
+const finder = makeAsyncDuplicatesFinder({
+  minSimilarity: 0.75,
+  shinglesSize: 5,
+  shinglesType: "word",
+  signatureLength: 100,
+  rowsPerBand: 5,
+});
+
+const promises = [];
+promises.add(finder.addItem(document1.id, document1.text));
+promises.add(finder.addItem(document2.id, document2.text));
+promises.addfinder.addItem(document3.id, document3.text));
+promises.add(finder.addItem(documentN.id, documentN.text));
+
+Promise.all(promises)
+  .then(() => finder.search())
+  .then(duplicates => console.log(duplicates));
+
+//Result
+
+{
+  document1: [[0.95, "document3"]], 
+  documentN: [[0.76, "document2"], [0.80, "document3"]
+}
+```
 ### Factory Callback Config
 
-To get a working instance of NearDuplicatesFinder class, you need to pass a proper config object to its factory callback.
+To get a working instance of BaseNearDuplicatesFinder class, you need to pass a proper config object to its factory callback.
 
 This config object must contain the following properties:
 
@@ -111,5 +140,8 @@ near-duplicate-docs is a simple but powerful library for finding near-duplicate 
 You can start using it by invoking a single factory callback with proper configuration. Then you add the docs for comparison and execute a single method to obtain a list of similar ones and their Jaccard Similarity indexes.
 
 Isn't that cool?
+
+## Changelog
+near-duplicates-docs follows semantic versioning. To see a changelog with all of its releases, check out the [Github releases page](https://github.com/SasheVuchkov/near-duplicate-docs/releases).
 
 *Copyright (c) Alexander Yuriev Vuchkov*

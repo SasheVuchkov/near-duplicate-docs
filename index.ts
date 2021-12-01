@@ -1,4 +1,7 @@
-import { makeDuplicatesFinder } from "./src/Factory/duplicatesFinderFactory";
+import {
+  makeAsyncDuplicatesFinder,
+  makeDuplicatesFinder,
+} from "./src/Factory/duplicatesFinderFactory";
 import { makeCandidatesFinder } from "./src/Factory/candidatesFinderFactory";
 import { makeJaccartSimilarityCalculator } from "./src/Factory/makeCalculator";
 import {
@@ -18,4 +21,5 @@ export {
   makeSignatureMatrix,
   makeBaseSparseMatrix,
   makeJaccartSimilarityCalculator,
+  makeAsyncDuplicatesFinder,
 };

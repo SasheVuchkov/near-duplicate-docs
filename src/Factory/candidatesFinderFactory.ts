@@ -8,12 +8,14 @@ import saltGenerator from "../Util/SaltGenerator";
 import BaseCandidatesFinder from "../BaseCandidatesFinder";
 import { makeMergeSortAlgo } from "./sortAlgoFactory";
 
-export const makeCandidatesFinder = (config: {
+export type Config = {
   shinglesSize: number;
   shinglesType: "char" | "word";
   signatureLength: number;
   rowsPerBand: number;
-}) => {
+};
+
+export const makeCandidatesFinder = (config: Config) => {
   let shingleTool: ShinglingTool;
   if (config.shinglesType === "char") {
     shingleTool = new StringShinglingTool(
@@ -39,12 +41,7 @@ export const makeCandidatesFinder = (config: {
   );
 };
 
-export const makeCandidatesFinderWithMocks = (config: {
-  shinglesSize: number;
-  shinglesType: "char" | "word";
-  signatureLength: number;
-  rowsPerBand: number;
-}) => {
+export const makeCandidatesFinderWithMocks = (config: Config) => {
   let shingleTool: ShinglingTool;
   if (config.shinglesType === "char") {
     shingleTool = new StringShinglingTool(
