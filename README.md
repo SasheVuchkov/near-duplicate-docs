@@ -73,10 +73,10 @@ const finder = makeAsyncDuplicatesFinder({
 });
 
 const promises = [];
-promises.add(finder.addItem(document1.id, document1.text));
-promises.add(finder.addItem(document2.id, document2.text));
-promises.addfinder.addItem(document3.id, document3.text));
-promises.add(finder.addItem(documentN.id, documentN.text));
+promises.add(finder.add(document1.id, document1.text));
+promises.add(finder.add(document2.id, document2.text));
+promises.addfinder.add(document3.id, document3.text));
+promises.add(finder.add(documentN.id, documentN.text));
 
 Promise.all(promises)
   .then(() => finder.search())
