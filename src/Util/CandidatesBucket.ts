@@ -30,16 +30,17 @@ export default class CandidatesBucket {
   }
   protected checkIndex(data: string[], copy: { [hash: string]: string[] }) {
     for (const docId of data) {
-      if (this.index[docId].length > 1) {
-        for (const indexedHash of this.index[docId]) {
-          if (!copy[indexedHash]) {
-            continue;
-          }
-          data = [...data, ...copy[indexedHash]].filter(
-            (item, index, arr) => index === arr.indexOf(item)
-          );
-          delete copy[indexedHash];
+      if (this.index[docId].length < 2) {
+        continue;
+      }
+      for (const indexedHash of this.index[docId]) {
+        if (!copy[indexedHash]) {
+          continue;
         }
+        data = [...data, ...copy[indexedHash]].filter(
+          (item, index, arr) => index === arr.indexOf(item)
+        );
+        delete copy[indexedHash];
       }
     }
     return data;
