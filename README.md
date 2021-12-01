@@ -15,9 +15,9 @@ Given the excellent stuff I learned and implemented, I believe the library will 
 
 
 
-###Install
+### Install
 
-####npm
+#### npm
 
 ```js
 npm install near-duplicate-docs --save
@@ -29,7 +29,7 @@ npm install near-duplicate-docs --save
 yarn add near-duplicate-docs --save
 ```
 
-###How to use it
+### How to use it
 
 The easiest way to use the library is by requiring/importing the makeDuplicatesFinder factory callback and using it to create an instance of NearDuplicatesFinder class.
 
@@ -98,13 +98,13 @@ You will experience the actual value of the library if you need to find similar 
 
 In the book, mentioned at the beginning, the authors recommend us to choose a `minSimilarity` and then arrange `signatureLength` and `rowsPerBand` around its value with the help of the following formula:
 
-[![Formula for approximating the rowsPerBand property](https://sashevuchkov.com/wp-content/uploads/2021/12/duplicate-text-formula.svg)]
+![Formula for approximating the rowsPerBand property](https://sashevuchkov.com/wp-content/uploads/2021/12/near-duplicate-text-formula.svg)
 
 Suppose you need better accuracy, then you can choose the right side of the equation to be way smaller than the `minSimilarity` value. That way, the finder will produce more false-positive candidates for detailed comparison. 
 
 Suppose you want better speed, then you can make the right side of the equation closer to the left side.
 
-###Conclusion
+### Conclusion
 
 near-duplicate-docs is a simple but powerful library for finding near-duplicate and duplicate documents in massive sets/libraries/databases. 
 
