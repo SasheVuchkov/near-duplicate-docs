@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AbstractNearDuplicatesFinder = void 0;
 const events_1 = require("events");
 class AbstractNearDuplicatesFinder extends events_1.EventEmitter {
     constructor(config, candidatesFinder, similarityCalculator) {
@@ -33,5 +32,5 @@ class AbstractNearDuplicatesFinder extends events_1.EventEmitter {
         return scores;
     }
 }
-exports.AbstractNearDuplicatesFinder = AbstractNearDuplicatesFinder;
+exports.default = AbstractNearDuplicatesFinder;
 //# sourceMappingURL=AbstractNearDuplicatesFinder.js.map

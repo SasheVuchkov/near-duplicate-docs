@@ -1,10 +1,12 @@
-import { Scores } from "./SimilarityCalculator/SimilarityCalculator";
-import { AbstractNearDuplicatesFinder } from "./AbstractNearDuplicatesFinder";
+import AbstractNearDuplicatesFinder, {
+  Duplicates,
+} from "./AbstractNearDuplicatesFinder";
+import NearDuplicatesFinder from "./NearDuplicatesFinder";
 
-export type Config = { minSimilarity: number };
-export type Duplicates = Scores;
-
-export default class BaseNearDuplicatesFinder extends AbstractNearDuplicatesFinder {
+export default class BaseNearDuplicatesFinder
+  extends AbstractNearDuplicatesFinder
+  implements NearDuplicatesFinder
+{
   public add(docId: string, text: string): void {
     this.candidatesFinder.add(docId, text);
     this.emit("doc_added", docId);

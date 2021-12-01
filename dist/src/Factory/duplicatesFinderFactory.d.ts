@@ -1,5 +1,5 @@
 import BaseNearDuplicatesFinder from "../BaseNearDuplicatesFinder";
-import AsyncNearDuplicatesFinder from "../AsyncNearDuplicatesFinder";
+import BaseAsyncNearDuplicatesFinder from "../BaseAsyncNearDuplicatesFinder";
 export declare type Config = {
     minSimilarity: number;
     shinglesSize: number;
@@ -8,5 +8,5 @@ export declare type Config = {
     rowsPerBand: number;
 };
 export declare const makeDuplicatesFinder: (config: Config) => BaseNearDuplicatesFinder;
-export declare const makeAsyncDuplicatesFinder: (config: Config) => AsyncNearDuplicatesFinder;
+export declare const makeAsyncDuplicatesFinder: (config: Config) => BaseAsyncNearDuplicatesFinder;
 export declare const makeDuplicatesFinderWithMocks: (config: Config) => BaseNearDuplicatesFinder;

@@ -1,21 +1,16 @@
-import NearDuplicatesFinder from "./NearDuplicatesFinder";
 import CandidatesFinder from "./CandidatesFinder";
 import SimilarityCalculator, {
   Scores,
 } from "./SimilarityCalculator/SimilarityCalculator";
-import { Config, Duplicates } from "./BaseNearDuplicatesFinder";
 import { EventEmitter } from "events";
 
-export abstract class AbstractNearDuplicatesFinder
-  extends EventEmitter
-  implements NearDuplicatesFinder
-{
+export type Config = { minSimilarity: number };
+export type Duplicates = Scores;
+
+export default abstract class AbstractNearDuplicatesFinder extends EventEmitter {
   protected config: Config;
   protected candidatesFinder: CandidatesFinder;
   protected similarityCalculator: SimilarityCalculator;
-
-  public abstract add(docId: string, text: string): void | Promise<void>;
-  public abstract search(): Duplicates | Promise<Duplicates>;
 
   public constructor(
     config: Config,

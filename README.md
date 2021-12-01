@@ -29,7 +29,7 @@ npm install near-duplicate-docs --save
 yarn add near-duplicate-docs --save
 ```
 
-### How to use it
+### How To Use It
 
 The easiest way to use the library is by requiring/importing the makeDuplicatesFinder factory callback and using it to create an instance of BaseNearDuplicatesFinder class.
 
@@ -67,7 +67,7 @@ const {makeAsyncDuplicatesFinder} = require('near-duplicate-docs');
 const finder = makeAsyncDuplicatesFinder({
   minSimilarity: 0.75,
   shinglesSize: 5,
-  shinglesType: "word",
+  shinglesType: "char",
   signatureLength: 100,
   rowsPerBand: 5,
 });
@@ -80,7 +80,8 @@ promises.add(finder.add(documentN.id, documentN.text));
 
 Promise.all(promises)
   .then(() => finder.search())
-  .then(duplicates => console.log(duplicates));
+  .then(duplicates => console.log(duplicates))
+  .catch(errors => console.log(errors));
 
 //Result
 

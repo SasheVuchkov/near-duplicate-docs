@@ -4,7 +4,7 @@ import {
 } from "./candidatesFinderFactory";
 import BaseNearDuplicatesFinder from "../BaseNearDuplicatesFinder";
 import JaccardSimilarityCalculator from "../SimilarityCalculator/JaccardSimilarityCalculator";
-import AsyncNearDuplicatesFinder from "../AsyncNearDuplicatesFinder";
+import BaseAsyncNearDuplicatesFinder from "../BaseAsyncNearDuplicatesFinder";
 
 export type Config = {
   minSimilarity: number;
@@ -27,7 +27,7 @@ export const makeDuplicatesFinder = (config: Config) => {
 export const makeAsyncDuplicatesFinder = (config: Config) => {
   const candidatesFinder = makeCandidatesFinder({ ...config });
 
-  return new AsyncNearDuplicatesFinder(
+  return new BaseAsyncNearDuplicatesFinder(
     { minSimilarity: config.minSimilarity },
     candidatesFinder,
     new JaccardSimilarityCalculator()

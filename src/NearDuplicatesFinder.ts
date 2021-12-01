@@ -1,6 +1,6 @@
-import { Duplicates } from "./BaseNearDuplicatesFinder";
+import { Duplicates } from "./AbstractNearDuplicatesFinder";
 
 export default interface NearDuplicatesFinder {
-  add(docId: string, text: string): void | Promise<void>;
-  search(): Duplicates | Promise<Duplicates>;
+  add(docId: string, text: string): void;
+  search(): Duplicates;
 }
