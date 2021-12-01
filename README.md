@@ -7,7 +7,7 @@ One simple library for finding near-duplicate and duplicate text documents. It w
 
 The project started as a part of the proprietary codebase of [BuhalBu's Kit](https://buhalbu.com) - a collection of free SEO tools that help you make your website more profitable by harnessing the power of many open-source and free APIs.
 
-In implementing the functionality for finding near-identical pages in a set of crawled URLs, I decided it would be cool to extract this stuff in its own repository. Finding near-duplicate documents in a library/collection/database/file system applies to many more use cases than the original one of searching for duplicate webpage content. So I believe the project deserves its own development cycle.
+While implementing the functionality for finding near-identical pages in a set of crawled URLs, I decided it would be cool to extract this stuff in its own repository. Finding near-duplicate documents in a library/collection/database/file system applies to many more use cases than the original one of searching for duplicate webpage content. So I believe the project deserves its own development cycle.
 
 I'm no expert (yet) on topics like Data Science and Natural Language Processing, so I used the methods and algorithms as described in the book [__Mining of Massive Datasets__](http://www.mmds.org/) by Jure Leskovec, Anand Rajaraman, and Jeff Ullman.
 
@@ -62,7 +62,7 @@ console.log(duplicates);
 ```
 
 ```js
-const {makeDuplicatesFinder} = require('near-duplicate-docs');
+const {makeAsyncDuplicatesFinder} = require('near-duplicate-docs');
 
 const finder = makeAsyncDuplicatesFinder({
   minSimilarity: 0.75,
@@ -75,7 +75,7 @@ const finder = makeAsyncDuplicatesFinder({
 const promises = [];
 promises.add(finder.add(document1.id, document1.text));
 promises.add(finder.add(document2.id, document2.text));
-promises.addfinder.add(document3.id, document3.text));
+promises.add(finder.add(document3.id, document3.text));
 promises.add(finder.add(documentN.id, documentN.text));
 
 Promise.all(promises)
