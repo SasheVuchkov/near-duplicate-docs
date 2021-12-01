@@ -144,4 +144,9 @@ Isn't that cool?
 ## Changelog
 near-duplicates-docs follows semantic versioning. To see a changelog with all of its releases, check out the [Github releases page](https://github.com/SasheVuchkov/near-duplicate-docs/releases).
 
+## Get in Touch
+If you have any questions, please feel free to get in touch by sending emails to <sashe@buhalbu.com>, or you can tweet [@SasheVuchkov](https://twitter.com/SasheVuchkov).
+
+Also, please don't hesitate to [file issues](https://github.com/SasheVuchkov/near-duplicate-docs/issues)...
+
 *Copyright (c) Alexander Yuriev Vuchkov*

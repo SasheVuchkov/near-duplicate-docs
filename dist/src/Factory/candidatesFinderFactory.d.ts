@@ -1,13 +1,9 @@
 import BaseCandidatesFinder from "../BaseCandidatesFinder";
-export declare const makeCandidatesFinder: (config: {
+export declare type Config = {
     shinglesSize: number;
     shinglesType: "char" | "word";
     signatureLength: number;
     rowsPerBand: number;
-}) => BaseCandidatesFinder;
-export declare const makeCandidatesFinderWithMocks: (config: {
-    shinglesSize: number;
-    shinglesType: "char" | "word";
-    signatureLength: number;
-    rowsPerBand: number;
-}) => BaseCandidatesFinder;
+};
+export declare const makeCandidatesFinder: (config: Config) => BaseCandidatesFinder;
+export declare const makeCandidatesFinderWithMocks: (config: Config) => BaseCandidatesFinder;
