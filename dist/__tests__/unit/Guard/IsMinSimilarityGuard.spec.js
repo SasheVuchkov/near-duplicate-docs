@@ -7,7 +7,7 @@ const IsMinSimilarityGuard_1 = __importDefault(require("../../../src/Guard/IsMin
 describe("Testing Guard/IsMinSimilarityGuard", () => {
     const guard = new IsMinSimilarityGuard_1.default();
     test("Test case: Is not number", () => {
-        expect(guard.isValid('falsdfkj')).toEqual(false);
+        expect(guard.isValid("falsdfkj")).toEqual(false);
         expect(guard.isValid({})).toEqual(false);
     });
     test("Test case: Is less than 0", () => {

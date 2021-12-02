@@ -7,7 +7,7 @@ const IsShinglesSizeGuard_1 = __importDefault(require("../../../src/Guard/IsShin
 describe("Testing Guard/IsShinglesSizeGuard", () => {
     const guard = new IsShinglesSizeGuard_1.default();
     test("Test case: Is not number", () => {
-        expect(guard.isValid('falsdfkj')).toEqual(false);
+        expect(guard.isValid("falsdfkj")).toEqual(false);
         expect(guard.isValid({})).toEqual(false);
     });
     test("Test case: Is less than 1", () => {

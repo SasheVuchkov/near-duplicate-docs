@@ -1,0 +1,26 @@
+name: deploy
+on:
+  release:
+    types: [edited]
+jobs:
+  run-all-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x, 16.x]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache node_modules
+        id: cache-modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ matrix.node-version }}-${{ runner.OS }}-build-${{ hashFiles('package.json') }}
+      - name: Build
+        if: steps.cache-modules.outputs.cache-hit != "true"
+        run: npm install -g yarn & yarn install
+      - name: Test
+        run: yarn test-all

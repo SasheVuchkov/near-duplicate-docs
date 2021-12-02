@@ -7,7 +7,7 @@ const IsSignatureLengthGuard_1 = __importDefault(require("../../../src/Guard/IsS
 describe("Testing Guard/IsSignatureLengthGuard", () => {
     const guard = new IsSignatureLengthGuard_1.default();
     test("Test case: Is not number", () => {
-        expect(guard.isValid('falsdfkj')).toEqual(false);
+        expect(guard.isValid("falsdfkj")).toEqual(false);
         expect(guard.isValid({})).toEqual(false);
     });
     test("Test case: Is less than 1", () => {
