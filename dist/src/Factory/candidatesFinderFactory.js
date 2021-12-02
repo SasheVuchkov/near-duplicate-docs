@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.makeCandidatesFinderWithMocks = exports.makeCandidatesFinder = void 0;
+exports.makeCandidatesFinderWithMocks = exports.makeCandidatesFinder = exports.isConfig = void 0;
 const StringShinglingTool_1 = __importDefault(require("../ShinglingTool/StringShinglingTool"));
 const hasherFactory_1 = require("./hasherFactory");
 const WordShinglingTool_1 = __importDefault(require("../ShinglingTool/WordShinglingTool"));
@@ -12,6 +12,15 @@ const BaseSignatureMatrix_1 = __importDefault(require("../ShinglingTool/BaseSign
 const SaltGenerator_1 = __importDefault(require("../Util/SaltGenerator"));
 const BaseCandidatesFinder_1 = __importDefault(require("../BaseCandidatesFinder"));
 const sortAlgoFactory_1 = require("./sortAlgoFactory");
+const guardFactory_1 = require("./guardFactory");
+const isConfig = (value) => {
+    const guard = (0, guardFactory_1.makeCandidatesFinderConfigGuard)();
+    if (!guard.isValid(value)) {
+        throw new Error(guard.getMessage());
+    }
+    return true;
+};
+exports.isConfig = isConfig;
 const makeCandidatesFinder = (config) => {
     let shingleTool;
     if (config.shinglesType === "char") {

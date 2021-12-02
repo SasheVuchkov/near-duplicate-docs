@@ -7,7 +7,7 @@ const AbstractNearDuplicatesFinder_1 = __importDefault(require("./AbstractNearDu
 class BaseAsyncNearDuplicatesFinder extends AbstractNearDuplicatesFinder_1.default {
     add(docId, text) {
         return new Promise((resolve) => {
-            this.candidatesFinder.add(docId, text);
+            this.candidatesFinder.add(docId.toString(), text.toString());
             this.emit("doc_added", docId);
             resolve();
         });

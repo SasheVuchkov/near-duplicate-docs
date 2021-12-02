@@ -1,50 +1,47 @@
 export default class CandidatesBucket {
   protected data: { [hash: string]: string[] } = {};
-  protected index: { [doc: string]: string[] } = {};
 
   public add(hash: string, doc: string): CandidatesBucket {
     if (!this.data[hash]) {
       this.data[hash] = [];
     }
 
-    if (!this.index[doc]) {
-      this.index[doc] = [];
-    }
-
     this.data[hash].push(doc);
-    this.index[doc].push(hash);
-
     return this;
   }
+
   public compress(): string[][] {
-    const data: string[][] = [];
-    const copy = { ...this.data };
-    for (const hash in copy) {
-      if (copy[hash].length < 2) {
+    const index: { [doc: string]: string } = {};
+    const bucket: { [hash: string]: string[] } = {};
+
+    for (const hash in this.data) {
+      if (this.data[hash].length < 2) {
         continue;
       }
-      const candidates = this.checkIndex([...this.data[hash]], copy);
-      data.push(candidates);
-    }
-    return data;
-  }
-  protected checkIndex(data: string[], copy: { [hash: string]: string[] }) {
-    for (const docId of data) {
-      if (this.index[docId].length < 2) {
-        continue;
-      }
-      for (const indexedHash of this.index[docId]) {
-        if (!copy[indexedHash]) {
+
+      let hashAppended = false;
+      for (const docId of this.data[hash]) {
+        if (!index[docId]) {
+          index[docId] = hash;
+        }
+
+        if (hashAppended) {
           continue;
         }
-        data = [...data, ...copy[indexedHash]].filter(
-          (item, index, arr) => index === arr.indexOf(item)
-        );
-        delete copy[indexedHash];
+
+        if (!bucket[index[docId]]) {
+          bucket[index[docId]] = [];
+        }
+
+        bucket[index[docId]] = bucket[index[docId]]
+          .concat(this.data[hash])
+          .filter((item, index, arr) => index === arr.indexOf(item));
+        hashAppended = true;
       }
     }
-    return data;
+    return Object.values(bucket);
   }
+
   public getData(): { [hash: string]: string[] } {
     return this.data;
   }

@@ -7,12 +7,23 @@ import BaseSignatureMatrix from "../ShinglingTool/BaseSignatureMatrix";
 import saltGenerator from "../Util/SaltGenerator";
 import BaseCandidatesFinder from "../BaseCandidatesFinder";
 import { makeMergeSortAlgo } from "./sortAlgoFactory";
+import { makeCandidatesFinderConfigGuard } from "./guardFactory";
 
 export type Config = {
   shinglesSize: number;
   shinglesType: "char" | "word";
   signatureLength: number;
   rowsPerBand: number;
+};
+
+export const isConfig = (value: any): value is Config => {
+  const guard = makeCandidatesFinderConfigGuard();
+
+  if (!guard.isValid(value)) {
+    throw new Error(guard.getMessage());
+  }
+
+  return true;
 };
 
 export const makeCandidatesFinder = (config: Config) => {

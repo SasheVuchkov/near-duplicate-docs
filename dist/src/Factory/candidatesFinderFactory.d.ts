@@ -5,5 +5,6 @@ export declare type Config = {
     signatureLength: number;
     rowsPerBand: number;
 };
+export declare const isConfig: (value: any) => value is Config;
 export declare const makeCandidatesFinder: (config: Config) => BaseCandidatesFinder;
 export declare const makeCandidatesFinderWithMocks: (config: Config) => BaseCandidatesFinder;

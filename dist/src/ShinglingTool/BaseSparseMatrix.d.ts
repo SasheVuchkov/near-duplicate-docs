@@ -11,7 +11,9 @@ export default class BaseSparseMatrix implements SparseMatrix, OffersShinglesByD
     getPayload(key: Key): Payload | undefined;
     getShingles(): Key[];
     getDocShingles(docIds: Key[]): {
-        [docId: Key]: [number, Shingle][];
+        [docId: Key]: {
+            [shingle: Shingle]: number;
+        };
     };
     addItem(key: Key, payload: string): SparseMatrix;
 }

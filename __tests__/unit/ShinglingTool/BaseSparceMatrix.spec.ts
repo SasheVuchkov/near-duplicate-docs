@@ -33,7 +33,8 @@ describe("Testig ShinglingTool/SparceMatrix class", () => {
     expect(Object.keys(data.randomId).length).toEqual(expected.length);
     expected.forEach((item) => {
       expect(
-        data.randomId.filter((tuple) => tuple[1] === item[1]).length
+        Object.keys(data.randomId).filter((shingle) => shingle === item[1])
+          .length
       ).not.toEqual(0);
       expect(Object.keys(rows).includes(item[1].toString())).toEqual(true);
     });

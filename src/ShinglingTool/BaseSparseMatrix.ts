@@ -20,20 +20,21 @@ export default class BaseSparseMatrix
   }
 
   public getDocShingles(docIds: Key[]): {
-    [docId: Key]: [number, Shingle][];
+    [docId: Key]: { [shingle: Shingle]: number };
   } {
-    const shingles: { [docId: Key]: [number, Shingle][] } = {};
+    const shingles: { [docId: Key]: { [shingle: Shingle]: number } } = {};
 
     for (const shingle in this.rows) {
       for (const id of docIds) {
         if (!shingles[id]) {
-          shingles[id] = [];
+          shingles[id] = {};
         }
         if (this.rows[shingle][id]) {
-          shingles[id].push([this.rows[shingle][id], shingle]);
+          shingles[id][shingle] = this.rows[shingle][id];
         }
       }
     }
+
     return shingles;
   }
 

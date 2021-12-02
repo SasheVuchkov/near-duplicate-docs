@@ -41,7 +41,7 @@ export default class BaseCandidatesFinder
   };
 
   public getDocShingles(docIds: string[]): {
-    [docId: Key]: [number, Shingle][];
+    [docId: Key]: { [shingle: Shingle]: number };
   } {
     return this.shinglesMatrix.getDocShingles(docIds);
   }

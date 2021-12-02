@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const AbstractNearDuplicatesFinder_1 = __importDefault(require("./AbstractNearDuplicatesFinder"));
 class BaseNearDuplicatesFinder extends AbstractNearDuplicatesFinder_1.default {
     add(docId, text) {
-        this.candidatesFinder.add(docId, text);
+        this.candidatesFinder.add(docId.toString(), text.toString());
         this.emit("doc_added", docId);
     }
     search() {

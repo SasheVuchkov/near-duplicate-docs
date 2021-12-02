@@ -18,10 +18,10 @@ class BaseSparseMatrix {
         for (const shingle in this.rows) {
             for (const id of docIds) {
                 if (!shingles[id]) {
-                    shingles[id] = [];
+                    shingles[id] = {};
                 }
                 if (this.rows[shingle][id]) {
-                    shingles[id].push([this.rows[shingle][id], shingle]);
+                    shingles[id][shingle] = this.rows[shingle][id];
                 }
             }
         }

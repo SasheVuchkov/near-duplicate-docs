@@ -18,7 +18,9 @@ export default class BaseCandidatesFinder extends EventEmitter implements Candid
     constructor(config: Config, shinglesMatrix: SparseMatrix & OffersShinglesByDoc, signatureMatrix: SignatureMatrix & FromSparseMatrix<SignatureMatrix>, shinglingTool: ShinglingTool);
     add: (docId: string, text: string) => void;
     getDocShingles(docIds: string[]): {
-        [docId: Key]: [number, Shingle][];
+        [docId: Key]: {
+            [shingle: Shingle]: number;
+        };
     };
     search(): string[][];
     protected hash(docIds: string[], vectors: {

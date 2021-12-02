@@ -1,12 +1,13 @@
 import SimilarityCalculator, { Scores } from "./SimilarityCalculator";
 import { Shingle } from "../ShinglingTool/ShinglingTool";
+import { Key } from "../ShinglingTool/SparseMatrix";
 
 export default class JaccardSimilarityCalculator
   implements SimilarityCalculator
 {
   public calculate(
     docIds: string[],
-    shingles: { [docId: string]: [number, Shingle][] }
+    shingles: { [docId: Key]: { [shingle: Shingle]: number } }
   ): Scores {
     const scores: Scores = {};
     const index: { [docId: string]: string[] } = {};
@@ -40,31 +41,35 @@ export default class JaccardSimilarityCalculator
     return scores;
   }
 
-  protected compare(s1: [number, Shingle][], s2: [number, Shingle][]): number {
+  protected compare(
+    s1: { [shingle: Shingle]: number },
+    s2: { [shingle: Shingle]: number }
+  ): number {
     const similar: (number | string)[] = [];
     const total: (number | string)[] = [];
 
-    for (const tuple of s1) {
-      let min = tuple[0];
-      let max = tuple[0];
-      const s2tuples = s2.filter((t) => t[1] === tuple[1]);
-      if (s2tuples.length > 0) {
-        min = min < s2tuples[0][0] ? min : s2tuples[0][0];
-        max = max > s2tuples[0][0] ? max : s2tuples[0][0];
+    for (const shingle in s1) {
+      let min = s1[shingle];
+      let max = s1[shingle];
+
+      const s2Count = s2[shingle];
+      if (s2Count) {
+        min = min < s2Count ? min : s2Count;
+        max = max > s2Count ? max : s2Count;
         for (let i = 1; i <= min; i += 1) {
-          similar.push(tuple[1]);
+          similar.push(shingle);
         }
       }
 
       for (let i = 1; i <= max; i += 1) {
-        total.push(tuple[1]);
+        total.push(shingle);
       }
     }
 
-    for (const tuple of s2) {
-      if (!total.includes(tuple[1])) {
-        for (let i = 1; i <= tuple[0]; i += 1) {
-          total.push(tuple[1]);
+    for (const shingle in s2) {
+      if (!total.includes(shingle)) {
+        for (let i = 1; i <= s2[shingle]; i += 1) {
+          total.push(shingle);
         }
       }
     }

@@ -1,0 +1,1 @@
+{"version":3,"file":"IsRowsPerBandGuard.js","sourceRoot":"","sources":["../../../src/Guard/IsRowsPerBandGuard.ts"],"names":[],"mappings":";;;;;AAAA,oEAA4C;AAE5C,MAAqB,kBAAmB,SAAQ,uBAAqB;IAArE;;QACY,aAAQ,GAAG,aAAa,CAAC;QACzB,YAAO,GAAG,+EAA+E,CAAC;IAKtG,CAAC;IAHQ,OAAO,CAAC,KAAU;QACvB,OAAO,OAAO,KAAK,KAAK,QAAQ,IAAI,KAAK,IAAI,CAAC,CAAC;IACjD,CAAC;CACF;AAPD,qCAOC"}

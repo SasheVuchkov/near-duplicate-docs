@@ -9,7 +9,7 @@ export default class BaseAsyncNearDuplicatesFinder
 {
   public add(docId: string, text: string): Promise<void> {
     return new Promise((resolve) => {
-      this.candidatesFinder.add(docId, text);
+      this.candidatesFinder.add(docId.toString(), text.toString());
       this.emit("doc_added", docId);
       resolve();
     });

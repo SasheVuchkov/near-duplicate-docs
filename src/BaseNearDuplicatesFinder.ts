@@ -8,7 +8,7 @@ export default class BaseNearDuplicatesFinder
   implements NearDuplicatesFinder
 {
   public add(docId: string, text: string): void {
-    this.candidatesFinder.add(docId, text);
+    this.candidatesFinder.add(docId.toString(), text.toString());
     this.emit("doc_added", docId);
   }
 

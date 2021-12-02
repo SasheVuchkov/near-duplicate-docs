@@ -7,6 +7,8 @@ export default abstract class CandidatesFinder extends EventEmitter implements O
     abstract add(docId: string, text: string): void;
     abstract search(): string[][];
     abstract getDocShingles(docIds: Key[]): {
-        [p: Key]: [number, Shingle][];
+        [docId: Key]: {
+            [shingle: Shingle]: number;
+        };
     };
 }

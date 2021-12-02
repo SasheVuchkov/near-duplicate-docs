@@ -7,6 +7,7 @@ export declare type Config = {
     signatureLength: number;
     rowsPerBand: number;
 };
+export declare const isConfig: (value: any) => value is Config;
 export declare const makeDuplicatesFinder: (config: Config) => BaseNearDuplicatesFinder;
 export declare const makeAsyncDuplicatesFinder: (config: Config) => BaseAsyncNearDuplicatesFinder;
 export declare const makeDuplicatesFinderWithMocks: (config: Config) => BaseNearDuplicatesFinder;

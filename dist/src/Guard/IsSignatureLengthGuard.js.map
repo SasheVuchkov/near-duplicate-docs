@@ -1,0 +1,1 @@
+{"version":3,"file":"IsSignatureLengthGuard.js","sourceRoot":"","sources":["../../../src/Guard/IsSignatureLengthGuard.ts"],"names":[],"mappings":";;;;;AAAA,oEAA4C;AAE5C,MAAqB,sBAAuB,SAAQ,uBAAqB;IAAzE;;QACY,aAAQ,GAAG,iBAAiB,CAAC;QAC7B,YAAO,GAAG,mFAAmF,CAAC;IAK1G,CAAC;IAHQ,OAAO,CAAC,KAAU;QACvB,OAAO,OAAO,KAAK,KAAK,QAAQ,IAAI,KAAK,IAAI,CAAC,CAAC;IACjD,CAAC;CACF;AAPD,yCAOC"}

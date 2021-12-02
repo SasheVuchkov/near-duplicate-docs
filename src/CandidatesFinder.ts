@@ -11,5 +11,7 @@ export default abstract class CandidatesFinder
 
   abstract search(): string[][];
 
-  abstract getDocShingles(docIds: Key[]): { [p: Key]: [number, Shingle][] };
+  abstract getDocShingles(docIds: Key[]): {
+    [docId: Key]: { [shingle: Shingle]: number };
+  };
 }
