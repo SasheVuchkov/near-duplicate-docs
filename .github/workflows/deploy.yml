@@ -5,6 +5,7 @@ on:
 jobs:
   run-all-tests:
     runs-on: ubuntu-latest
+    environment: production
     strategy:
       matrix:
         node-version: [12.x, 14.x, 16.x]
@@ -20,6 +21,7 @@ jobs:
   publish:
     needs: run-all-tests
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -28,4 +30,6 @@ jobs:
       - name: Build
         run: npm install -g yarn & yarn install
       - name: Publish
-        run: npm set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }} & publish
+        run: npm set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+      - name: Publish
+        run: npm publish
