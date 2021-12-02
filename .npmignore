@@ -6,4 +6,6 @@ __tests__/coverage
 coverage
 .eslintcache
 __tests__
-./src
+src
+src/*
+.github
