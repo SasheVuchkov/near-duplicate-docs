@@ -13,7 +13,7 @@ const makeBaseSparseMatrix = () => {
 };
 exports.makeBaseSparseMatrix = makeBaseSparseMatrix;
 const makeSignatureMatrix = (sigLength) => {
-    new BaseSignatureMatrix_1.default({ sigLength }, SaltGenerator_1.default, (0, sortAlgoFactory_1.makeMergeSortAlgo)());
+    return new BaseSignatureMatrix_1.default({ sigLength }, SaltGenerator_1.default, (0, sortAlgoFactory_1.makeMergeSortAlgo)());
 };
 exports.makeSignatureMatrix = makeSignatureMatrix;
 //# sourceMappingURL=matrixFactory.js.map

@@ -57,3 +57,13 @@ export const makeDuplicatesFinderWithMocks = (config: Config) => {
     new JaccardSimilarityCalculator()
   );
 };
+
+export const makeAsyncDuplicatesFinderWithMocks = (config: Config) => {
+  const candidatesFinder = makeCandidatesFinderWithMocks({ ...config });
+
+  return new BaseAsyncNearDuplicatesFinder(
+    { minSimilarity: config.minSimilarity },
+    candidatesFinder,
+    new JaccardSimilarityCalculator()
+  );
+};

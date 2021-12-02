@@ -8,5 +8,9 @@ export const makeBaseSparseMatrix = () => {
 };
 
 export const makeSignatureMatrix = (sigLength: number) => {
-  new BaseSignatureMatrix({ sigLength }, saltGenerator, makeMergeSortAlgo());
+  return new BaseSignatureMatrix(
+    { sigLength },
+    saltGenerator,
+    makeMergeSortAlgo()
+  );
 };

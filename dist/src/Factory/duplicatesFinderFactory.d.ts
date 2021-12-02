@@ -11,3 +11,4 @@ export declare const isConfig: (value: any) => value is Config;
 export declare const makeDuplicatesFinder: (config: Config) => BaseNearDuplicatesFinder;
 export declare const makeAsyncDuplicatesFinder: (config: Config) => BaseAsyncNearDuplicatesFinder;
 export declare const makeDuplicatesFinderWithMocks: (config: Config) => BaseNearDuplicatesFinder;
+export declare const makeAsyncDuplicatesFinderWithMocks: (config: Config) => BaseAsyncNearDuplicatesFinder;

@@ -16,7 +16,7 @@ describe("Testing Utils/CandidatesBucket class", () => {
       ["doc1", "doc2", "doc3"],
       ["doc5", "doc6"],
     ];
-    const uniquePairs = bucket.compress();
+    const uniquePairs = bucket.dump();
     expect(uniquePairs).toEqual(expectedPairs);
 
     const rawData = bucket.getData();

@@ -11,7 +11,7 @@ class IsMinSimilarityGuard extends AbstractGuard_1.default {
         this.message = `Missing or incorrect 'minSimilarity': it must be number between 0 and 1.`;
     }
     isValid(value) {
-        return typeof value === "number" && value >= 0 && value <= 100;
+        return typeof value === "number" && value >= 0 && value <= 1;
     }
 }
 exports.default = IsMinSimilarityGuard;

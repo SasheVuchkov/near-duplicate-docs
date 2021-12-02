@@ -10,7 +10,12 @@ export default class CandidatesBucket {
     return this;
   }
 
-  public compress(): string[][] {
+  /**
+   * The bucket registers all passed hashes and documents,
+   * so if we want only the candidates, we need to filter
+   * the rest.
+   */
+  public dump(): string[][] {
     const index: { [doc: string]: string } = {};
     const bucket: { [hash: string]: string[] } = {};
 

@@ -110,5 +110,48 @@ describe("Testing NearDuplicateFinder class", () => {
         const duplicates = finder.search();
         expect(duplicates).toEqual(expected);
     }));
+    test("Test case: It found near duplicate docs using word shingles (Async)", () => __awaiter(void 0, void 0, void 0, function* () {
+        var e_3, _c;
+        const expected = {
+            review5: [
+                [1, "review6"],
+                [0.926829268292683, "review136"],
+            ],
+            review6: [[0.926829268292683, "review136"]],
+            review81: [[0.8582677165354331, "review9"]],
+        };
+        const finder = (0, duplicatesFinderFactory_1.makeAsyncDuplicatesFinderWithMocks)({
+            minSimilarity: 0.01,
+            shinglesSize: 5,
+            shinglesType: "word",
+            signatureLength: 100,
+            rowsPerBand: 5,
+        });
+        const fileStream = fs_1.default.createReadStream(path_1.default.join(__dirname, "..", "..", "datasets", "reviews.test.txt"));
+        const rl = readline_1.default.createInterface({
+            input: fileStream,
+            crlfDelay: Infinity,
+        });
+        let count = 0;
+        try {
+            for (var rl_3 = __asyncValues(rl), rl_3_1; rl_3_1 = yield rl_3.next(), !rl_3_1.done;) {
+                const line = rl_3_1.value;
+                yield finder.add(`review${count}`, line);
+                count += 1;
+                if (count > 200) {
+                    break;
+                }
+            }
+        }
+        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+        finally {
+            try {
+                if (rl_3_1 && !rl_3_1.done && (_c = rl_3.return)) yield _c.call(rl_3);
+            }
+            finally { if (e_3) throw e_3.error; }
+        }
+        const duplicates = yield finder.search();
+        expect(duplicates).toEqual(expected);
+    }));
 });
 //# sourceMappingURL=NearDuplicatesFinder.func.js.map

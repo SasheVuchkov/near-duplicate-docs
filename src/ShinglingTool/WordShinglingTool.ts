@@ -7,6 +7,7 @@ export default class WordShinglingTool extends BaseShinglingTool {
     text: string,
     callback: (docId: string, shingle: Shingle) => void
   ): void {
+    //If the language doesn't use spaces, you must use StringShinglingTool
     const items = text.split(" ");
     let startPosition = 0;
     let endPosition = this.shingleSize;

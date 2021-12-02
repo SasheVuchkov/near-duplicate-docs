@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.makeDuplicatesFinderWithMocks = exports.makeAsyncDuplicatesFinder = exports.makeDuplicatesFinder = exports.isConfig = void 0;
+exports.makeAsyncDuplicatesFinderWithMocks = exports.makeDuplicatesFinderWithMocks = exports.makeAsyncDuplicatesFinder = exports.makeDuplicatesFinder = exports.isConfig = void 0;
 const candidatesFinderFactory_1 = require("./candidatesFinderFactory");
 const BaseNearDuplicatesFinder_1 = __importDefault(require("../BaseNearDuplicatesFinder"));
 const JaccardSimilarityCalculator_1 = __importDefault(require("../SimilarityCalculator/JaccardSimilarityCalculator"));
@@ -34,4 +34,9 @@ const makeDuplicatesFinderWithMocks = (config) => {
     return new BaseNearDuplicatesFinder_1.default({ minSimilarity: config.minSimilarity }, candidatesFinder, new JaccardSimilarityCalculator_1.default());
 };
 exports.makeDuplicatesFinderWithMocks = makeDuplicatesFinderWithMocks;
+const makeAsyncDuplicatesFinderWithMocks = (config) => {
+    const candidatesFinder = (0, candidatesFinderFactory_1.makeCandidatesFinderWithMocks)(Object.assign({}, config));
+    return new BaseAsyncNearDuplicatesFinder_1.default({ minSimilarity: config.minSimilarity }, candidatesFinder, new JaccardSimilarityCalculator_1.default());
+};
+exports.makeAsyncDuplicatesFinderWithMocks = makeAsyncDuplicatesFinderWithMocks;
 //# sourceMappingURL=duplicatesFinderFactory.js.map

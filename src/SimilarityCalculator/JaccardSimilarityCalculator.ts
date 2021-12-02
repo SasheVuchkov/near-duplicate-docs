@@ -10,6 +10,7 @@ export default class JaccardSimilarityCalculator
     shingles: { [docId: Key]: { [shingle: Shingle]: number } }
   ): Scores {
     const scores: Scores = {};
+    //Holds an information for already processed pairs
     const index: { [docId: string]: string[] } = {};
 
     for (const current of docIds) {
@@ -24,6 +25,7 @@ export default class JaccardSimilarityCalculator
           index[doc] = [];
         }
 
+        //Let's skip it, if the pair is already processed
         if (index[current] && index[current].includes(doc)) {
           continue;
         }
@@ -49,6 +51,15 @@ export default class JaccardSimilarityCalculator
     const total: (number | string)[] = [];
 
     for (const shingle in s1) {
+      /**
+       * The shingle lists are actually list of shingle "bags",
+       * so to calculate the index properly, if a shingle appears
+       * in both of the lists, then it's appended only the number
+       * of times it occurs in their intersection.
+       *
+       * Later we append it the number of occurrences in their union,
+       * when we count the total number of shingles.
+       */
       let min = s1[shingle];
       let max = s1[shingle];
 

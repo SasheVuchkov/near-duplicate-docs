@@ -54,10 +54,18 @@ class BaseCandidatesFinder extends events_1.EventEmitter {
             this.hash(docIds, currentVectors[bandKey], bucket);
             bandKey += 1;
         }
-        const candidates = bucket.compress();
+        const candidates = bucket.dump();
         this.emit("finish", candidates);
         return candidates;
     }
+    /**
+     * We use hashes of the signature fragments to find
+     * candidates for detailed comparison in a speed manner
+     * @param docIds
+     * @param vectors
+     * @param bucket
+     * @protected
+     */
     hash(docIds, vectors, bucket) {
         for (const doc of docIds) {
             const hash = vectors[doc].join("");

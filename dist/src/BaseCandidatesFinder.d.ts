@@ -23,6 +23,14 @@ export default class BaseCandidatesFinder extends EventEmitter implements Candid
         };
     };
     search(): string[][];
+    /**
+     * We use hashes of the signature fragments to find
+     * candidates for detailed comparison in a speed manner
+     * @param docIds
+     * @param vectors
+     * @param bucket
+     * @protected
+     */
     protected hash(docIds: string[], vectors: {
         [id: string]: number[];
     }, bucket: CandidatesBucket): CandidatesBucket;

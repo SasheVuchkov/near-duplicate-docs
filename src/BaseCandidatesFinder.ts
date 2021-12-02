@@ -91,11 +91,19 @@ export default class BaseCandidatesFinder
       bandKey += 1;
     }
 
-    const candidates = bucket.compress();
+    const candidates = bucket.dump();
     this.emit("finish", candidates);
     return candidates;
   }
 
+  /**
+   * We use hashes of the signature fragments to find
+   * candidates for detailed comparison in a speed manner
+   * @param docIds
+   * @param vectors
+   * @param bucket
+   * @protected
+   */
   protected hash(
     docIds: string[],
     vectors: { [id: string]: number[] },

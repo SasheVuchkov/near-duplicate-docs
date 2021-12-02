@@ -7,7 +7,13 @@ export default class StringShinglingTool extends BaseShinglingTool {
     text: string,
     callback: (docId: string, shingle: Shingle) => void
   ): void {
+    /**
+     * Let's deconstruct the string into array of characters and eliminate the need
+     * to handle by ourselves some of the complexities related to unicode characters.
+     */
+
     const items = [...text];
+
     let startPosition = 0;
     let endPosition = this.shingleSize;
 

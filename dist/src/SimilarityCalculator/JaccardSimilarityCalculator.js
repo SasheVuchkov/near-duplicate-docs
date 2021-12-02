@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class JaccardSimilarityCalculator {
     calculate(docIds, shingles) {
         const scores = {};
+        //Holds an information for already processed pairs
         const index = {};
         for (const current of docIds) {
             const currentShingles = shingles[current];
@@ -13,6 +14,7 @@ class JaccardSimilarityCalculator {
                 if (typeof index[doc] === "undefined") {
                     index[doc] = [];
                 }
+                //Let's skip it, if the pair is already processed
                 if (index[current] && index[current].includes(doc)) {
                     continue;
                 }
@@ -30,6 +32,15 @@ class JaccardSimilarityCalculator {
         const similar = [];
         const total = [];
         for (const shingle in s1) {
+            /**
+             * The shingle lists are actually list of shingle "bags",
+             * so to calculate the index properly, if a shingle appears
+             * in both of the lists, then it's appended only the number
+             * of times it occurs in their intersection.
+             *
+             * Later we append it the number of occurrences in their union,
+             * when we count the total number of shingles.
+             */
             let min = s1[shingle];
             let max = s1[shingle];
             const s2Count = s2[shingle];

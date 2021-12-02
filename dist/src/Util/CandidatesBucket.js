@@ -11,7 +11,12 @@ class CandidatesBucket {
         this.data[hash].push(doc);
         return this;
     }
-    compress() {
+    /**
+     * The bucket registers all passed hashes and documents,
+     * so if we want only the candidates, we need to filter
+     * the rest.
+     */
+    dump() {
         const index = {};
         const bucket = {};
         for (const hash in this.data) {
