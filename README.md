@@ -57,7 +57,7 @@ console.log(duplicates);
 
 {
   document1: [[0.95, "document3"]], 
-  documentN: [[0.76, "document2"], [0.80, "document3"]
+  documentN: [[0.76, "document2"], [0.80, "document3"]]
 }
 ```
 
@@ -87,7 +87,7 @@ Promise.all(promises)
 
 {
   document1: [[0.95, "document3"]], 
-  documentN: [[0.76, "document2"], [0.80, "document3"]
+  documentN: [[0.76, "document2"], [0.80, "document3"]]
 }
 ```
 ### Factory Callback Config
@@ -138,7 +138,7 @@ Suppose you want better speed, then you can make the right side of the equation 
 
 near-duplicate-docs is a simple but powerful library for finding near-duplicate and duplicate documents in massive sets/libraries/databases. 
 
-You can start using it by invoking a single factory callback with proper configuration. Then you add the docs for comparison and execute a single method to obtain a list of similar ones and their Jaccard Similarity indexes.
+You can start using it by invoking a factory callback with proper configuration. Then you add the docs for comparison and execute a single method to obtain a list of similar documents and their Jaccard Similarity indexes.
 
 Isn't that cool?
 
