@@ -1,7 +1,9 @@
 name: deploy
 on:
+  push:
+    branches: [main]
   release:
-    types: [edited]
+    types: [published]
 jobs:
   run-all-tests:
     runs-on: ubuntu-latest
@@ -20,7 +22,7 @@ jobs:
           path: node_modules
           key: ${{ matrix.node-version }}-${{ runner.OS }}-build-${{ hashFiles('package.json') }}
       - name: Build
-        if: steps.cache-modules.outputs.cache-hit != "true"
+        if: steps.cache-modules.outputs.cache-hit != 'true'
         run: npm install -g yarn & yarn install
       - name: Test
         run: yarn test-all
