@@ -22,7 +22,7 @@ describe("Testing Guard/IsMinSimilarityGuard", () => {
 
   test("Test case: The message is correct", () => {
     expect(guard.getMessage()).toEqual(
-      `Missing or incorrect 'minSimilarity': it must be number between 0 and 1.1`
+      `Missing or incorrect 'minSimilarity': it must be number between 0 and 1.`
     );
   });
 

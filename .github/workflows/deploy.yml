@@ -1,7 +1,5 @@
 name: deploy
 on:
-  push:
-    branches: [main]
   release:
     types: [published]
 jobs:
@@ -15,14 +13,19 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Cache node_modules
-        id: cache-modules
-        uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: ${{ matrix.node-version }}-${{ runner.OS }}-build-${{ hashFiles('package.json') }}
       - name: Build
-        if: steps.cache-modules.outputs.cache-hit != 'true'
         run: npm install -g yarn & yarn install
       - name: Test
         run: yarn test-all
+  publish:
+    needs: run-all-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - name: Build
+        run: npm install -g yarn & yarn install
+      - name: Publish
+        run: npm set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }} & publish

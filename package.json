@@ -65,7 +65,8 @@
     "jshashes": "^1.0.8"
   },
   "pre-commit": [
-    "lint"
+    "lint",
+    "test-all"
   ],
   "keywords": [
     "near-duplicate documents",
