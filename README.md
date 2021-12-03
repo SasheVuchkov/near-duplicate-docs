@@ -2,6 +2,8 @@
 
 [![By](https://img.shields.io/badge/made%20by-SasheVuchkov-blue.svg?style=flat)](https://github.com/SasheVuchkov)
 [![Version](https://img.shields.io/github/v/release/SasheVuchkov/near-duplicate-docs?label=version&logo=github)](https://github.com/SasheVuchkov/near-duplicate-docs)
+[![Coverage Status](https://coveralls.io/repos/github/SasheVuchkov/near-duplicate-docs/badge.svg?branch=main)](https://coveralls.io/github/SasheVuchkov/near-duplicate-docs?branch=main)
+![Deploy](https://github.com/SasheVuchkov/near-duplicate-docs/actions/workflows/deploy.yml/badge.svg)
 
 One simple library for finding near-duplicate and duplicate text documents. It works for text pieces of any kind, but I'm creating it with HTML pages in mind.
 

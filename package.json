@@ -1,6 +1,6 @@
 {
   "name": "near-duplicate-docs",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "Simple library for finding duplicate and near-duplicate text documents in massive sets/libraries/databases",
   "main": "dist/index.js",
   "author": "Sashe Vuchkov <sashe@buahlbu.com>",
@@ -19,20 +19,20 @@
     "near-duplicate documents",
     "near-duplicate detection"
   ],
-  "homepage": "https://github.com/SasheVuchkov/near-duplicate-docs#readme",
+  "homepage": "https://buhalbu.com/showroom/near-duplicate-docs",
   "scripts": {
     "start": "tsc && node dist/index.js",
     "build": "tsc",
     "test": "tsc && jest --testPathPattern=.spec.",
     "test-all": "tsc && jest --testTimeout=10000",
-    "test-coverage": "tsc && jest --coverage",
+    "test-coverage": "tsc && jest --testTimeout=10000 --coverage --collectCoverage=true",
     "watch:build": "tsc --watch",
     "lint": "eslint . --cache --ext .ts",
     "lint:prettier": "prettier "
   },
   "jest": {
     "coverageReporters": [
-      "html"
+      "lcov", "html"
     ],
     "coverageDirectory": "../coverage",
     "rootDir": "./__tests__"
