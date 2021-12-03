@@ -48,9 +48,13 @@ export default abstract class AbstractNearDuplicatesFinder extends EventEmitter 
     }
 
     for (const score in scores) {
-      scores[score] = scores[score].filter(
+      const temp = scores[score].filter(
         (tuple) => this.config.minSimilarity < tuple[0]
       );
+      delete scores[score];
+      if (temp.length > 0) {
+        scores[score] = temp;
+      }
     }
 
     return scores;

@@ -27,7 +27,11 @@ class AbstractNearDuplicatesFinder extends events_1.EventEmitter {
             this.emit("score", pairScore);
         }
         for (const score in scores) {
-            scores[score] = scores[score].filter((tuple) => this.config.minSimilarity < tuple[0]);
+            const temp = scores[score].filter((tuple) => this.config.minSimilarity < tuple[0]);
+            delete scores[score];
+            if (temp.length > 0) {
+                scores[score] = temp;
+            }
         }
         return scores;
     }

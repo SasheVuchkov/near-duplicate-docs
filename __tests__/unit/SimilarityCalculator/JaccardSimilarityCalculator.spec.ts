@@ -50,6 +50,27 @@ describe("Testing SimilarityCalculator/JaccardSimilarityCalculator calss", () =>
       ],
       { text0: [[0.2, "text1"]] },
     ],
+    [
+      "Test case: Finding less similar texts and don't return empty results",
+      [
+        "Like Game of Thrones, but with lasers and Piña colada",
+        "Like Game of Thrones, but in a bathtub",
+        "Like Game of Thrones, but in a bathtub",
+        "Like Game of Thrones, but in a bathtub and",
+      ],
+      {
+        text0: [
+          [0.2, "text1"],
+          [0.2, "text2"],
+          [0.18181818181818182, "text3"],
+        ],
+        text1: [
+          [1, "text2"],
+          [0.8333333333333334, "text3"],
+        ],
+        text2: [[0.8333333333333334, "text3"]],
+      },
+    ],
   ];
 
   test.each(data)(
