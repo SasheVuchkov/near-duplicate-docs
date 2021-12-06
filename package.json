@@ -1,6 +1,6 @@
 {
   "name": "near-duplicate-docs",
-  "version": "1.1.11",
+  "version": "1.1.12",
   "description": "Simple library for finding duplicate and near-duplicate text documents in massive sets/libraries/databases",
   "main": "dist/index.js",
   "author": "Sashe Vuchkov <sashe@buahlbu.com>",
@@ -32,7 +32,8 @@
   },
   "jest": {
     "coverageReporters": [
-      "lcov", "html"
+      "lcov",
+      "html"
     ],
     "coverageDirectory": "../coverage",
     "rootDir": "./__tests__"
