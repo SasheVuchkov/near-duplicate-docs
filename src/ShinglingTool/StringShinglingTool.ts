@@ -26,8 +26,14 @@ export default class StringShinglingTool extends BaseShinglingTool {
         items.slice(startPosition, endPosition).join("")
       );
       callback(docId, shingle);
-      startPosition += 1;
-      endPosition += 1;
+      startPosition += this.shingleSize;
+      endPosition =
+        endPosition + this.shingleSize > items.length
+          ? items.length
+          : endPosition + this.shingleSize;
+      if (startPosition >= endPosition) {
+        break;
+      }
     }
   }
 }

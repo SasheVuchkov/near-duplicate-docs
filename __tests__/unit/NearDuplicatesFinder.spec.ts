@@ -25,7 +25,7 @@ describe("Testing NearDuplicateFinder class", () => {
         "Like The Rings of The Lord, but with pink parrots",
         "Like The Rings of The Lord, but with pink poodles",
       ],
-      { text0: [[0.7647058823529411, "text1"]] },
+      { text0: [[0.6666666666666666, "text1"]] },
     ],
     [
       "Test case: Totally different identical texts (score=0)",

@@ -72,10 +72,10 @@ describe("Testing NearDuplicateFinder class", () => {
         const expected = {
             review5: [
                 [1, "review6"],
-                [0.9430284857571214, "review136"],
+                [0.9333333333333333, "review136"],
             ],
-            review6: [[0.9430284857571214, "review136"]],
-            review9: [[0.8916129032258064, "review81"]],
+            review6: [[0.9333333333333333, "review136"]],
+            review81: [[0.8853503184713376, "review9"]],
         };
         const finder = (0, duplicatesFinderFactory_1.makeDuplicatesFinderWithMocks)({
             minSimilarity: 0.01,
